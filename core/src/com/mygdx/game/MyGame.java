@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
+import Screens.Menu_Screen;
+import Screens.Play_Screen;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,8 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.awt.*;
 
-public class MyGame extends ApplicationAdapter {
-	SpriteBatch batch; // holds all images
+public class MyGame extends Game {
+	public SpriteBatch batch; // holds all images, public so all screens can access it
 	Texture img;
 
 	Player player;
@@ -28,22 +31,26 @@ public class MyGame extends ApplicationAdapter {
     //  rainMusic.play();
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("Owlet_Monster.png");
-		player = new Player(img); // instantiation of player class
+		//img = new Texture("Owlet_Monster.png");
+		//player = new Player(img); // instantiation of player class
+		setScreen(new Play_Screen(this));
 
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		player.Draw(batch);
-		batch.end();
+		//ScreenUtils.clear(1, 0, 0, 1);
+		//batch.begin();
+		//player.Draw(batch);
+		//batch.end();
+		// delegates render to active screen
+		super.render();
+
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		//img.dispose();
 	}
 }
