@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Screens.Credit_Screen;
 import Screens.Menu_Screen;
 import Screens.Play_Screen;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -14,8 +15,10 @@ import java.awt.*;
 public class MyGame extends Game {
 	public SpriteBatch batch; // holds all images, public so all screens can access it
 	Texture img;
+	public static final int V_WIDTH = 400;
 
-	Player player;
+	public static final int V_HEIGHT = 208;
+
 
 	
 	@Override
@@ -31,18 +34,13 @@ public class MyGame extends Game {
     //  rainMusic.play();
 	public void create () {
 		batch = new SpriteBatch();
-		//img = new Texture("Owlet_Monster.png");
-		//player = new Player(img); // instantiation of player class
-		setScreen(new Play_Screen(this));
+		// sets the first screen to be loaded
+		setScreen(new Credit_Screen(this));
 
 	}
 
 	@Override
 	public void render () {
-		//ScreenUtils.clear(1, 0, 0, 1);
-		//batch.begin();
-		//player.Draw(batch);
-		//batch.end();
 		// delegates render to active screen
 		super.render();
 
@@ -51,6 +49,5 @@ public class MyGame extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		//img.dispose();
 	}
 }
