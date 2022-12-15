@@ -21,6 +21,7 @@ public class Player {
         position = new Vector2(Gdx.graphics.getWidth()/2,sprite.getScaleY()*sprite.getHeight()/2);
     }
 
+    // maps keys to actions
     public void Update(float deltaTime){
         // WASD movement input processing
         if(Gdx.input.isKeyPressed(Keys.A)) position.x-=deltaTime*speed;
