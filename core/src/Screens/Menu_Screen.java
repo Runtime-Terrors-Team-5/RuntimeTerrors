@@ -1,11 +1,8 @@
 package Screens;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Screen;
@@ -34,14 +31,25 @@ public class Menu_Screen implements Screen {
     @Override
     public void render (float delta) {
         ScreenUtils.clear(1, 0, 0, 1);
-        game.batch.begin();
-        game.batch.draw(texture,0,0);
-        game.batch.end();
+        gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
+        //game.batch.draw(texture,0,0);
+        game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
+        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+
+        game.batch.end();
+
+
+        if (Gdx.input.isTouched() ) {
+            game.setScreen(new Play_Screen(game));
+            dispose();
+        }
     }
     @Override
     public void resize(int width, int height){
         game_port.update(width, height);
+        gamecam.setToOrtho(false, width, height);
 
     }
     @Override

@@ -1,5 +1,7 @@
 package Screens;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import com.badlogic.gdx.Game;
@@ -15,17 +17,20 @@ import com.mygdx.game.Player;
 
 public class Play_Screen implements Screen {
     private MyGame game;
-    Player player;
+    Player chef1;
     // sets screen size
     private Viewport game_port;
     private OrthographicCamera gamecam;
+    TextureAtlas atlas;
 
     Texture texture; // temp
 
     public Play_Screen(MyGame game){
         this.game = game;
-        Texture img = new Texture("Owlet_Monster.png");
-        player = new Player(img);
+        //Texture img = new Texture("Owlet_Monster.png");
+        atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
+
+        chef1 = new Player(atlas.findRegion("C_Blue_N").getTexture());
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
     }
@@ -36,15 +41,18 @@ public class Play_Screen implements Screen {
 
     @Override
     public void render (float delta) {
-        ScreenUtils.clear(1, 0, 0, 1);
+        ScreenUtils.clear(0, 1, 0, 1);
+        gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        player.Draw(game.batch);
+        game.font.draw(game.batch, "The Main game screen", 100, 100);
+        chef1.Draw(game.batch);
         game.batch.end();
 }
     @Override
     public void resize(int width, int height){
         game_port.update(width, height);
+        gamecam.setToOrtho(false, width, height);
 
     }
     @Override
@@ -62,7 +70,7 @@ public class Play_Screen implements Screen {
 
     @Override
     public void dispose(){
-
+        atlas.dispose();
     }
 
 }

@@ -7,13 +7,16 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.awt.*;
 
 public class MyGame extends Game {
 	public SpriteBatch batch; // holds all images, public so all screens can access it
+	public BitmapFont font;
 	Texture img;
 	public static final int V_WIDTH = 400;
 
@@ -34,16 +37,17 @@ public class MyGame extends Game {
     //  rainMusic.play();
 	public void create () {
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 		// sets the first screen to be loaded
-		setScreen(new Credit_Screen(this));
+		this.setScreen(new Menu_Screen(this));
 
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 1);
-		batch.begin();
-		batch.end();
+		//ScreenUtils.clear(0, 0, 0, 1);
+		//batch.begin();
+		//batch.end();
 		// delegates render to active screen
 		super.render();
 
@@ -52,5 +56,6 @@ public class MyGame extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		font.dispose();
 	}
 }
