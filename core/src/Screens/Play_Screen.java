@@ -29,8 +29,7 @@ public class Play_Screen implements Screen {
         this.game = game;
         //Texture img = new Texture("Owlet_Monster.png");
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
-
-        chef1 = new Player(atlas.findRegion("C_Blue_N").getTexture());
+        chef1 = new Player(atlas.findRegion("C_Blue_N"));
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
     }
