@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input.Keys;
 import Screens.Play_Screen;
 
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+
 public class Player {
 
     // attributes
@@ -47,6 +49,8 @@ public class Player {
     public void Draw(SpriteBatch batch){
         Update(Gdx.graphics.getDeltaTime());
         sprite.setPosition(position.x, position.y);
+        sprite.setSize(50,50);
         sprite.draw(batch);
+
     }
 }
