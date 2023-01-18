@@ -41,10 +41,10 @@ public class Play_Screen implements Screen {
 
     public Play_Screen(MyGame game){
         this.game = game;
+        // loads kitchen map
         maploader = new TmxMapLoader();
         map = maploader.load("kitchen_map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        //Texture img = new Texture("Owlet_Monster.png");
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
         chef1 = new Player(atlas.findRegion("C_Blue_N"));
         chef2 = new Player(atlas.findRegion("C_Green_N"));
@@ -55,7 +55,7 @@ public class Play_Screen implements Screen {
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
 
-
+        // map camera
         gamecam.position.set(game_port.getWorldWidth() / 2, game_port.getWorldHeight() / 2, 0);
     }
     @Override
@@ -98,7 +98,7 @@ public class Play_Screen implements Screen {
 
     public void handleInput(float dt){
         if(Gdx.input.isTouched()) {
-            gamecam.position.x += 100 * dt;
+            gamecam.position.y += 100 * dt;
         }
 
     }
