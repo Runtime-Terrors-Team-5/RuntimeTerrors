@@ -8,13 +8,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input.Keys;
 import Screens.Play_Screen;
 
+
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+
+import java.util.HashSet;
+
 
 public class Player {
 
     // attributes
     public Vector2 position;
     public Sprite sprite;
+    public Sprite inventorySprite;
+    public Object[] inventory;
 
     public float speed = 300; // player movement speed
 
@@ -24,10 +30,12 @@ public class Player {
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
     }
-    public Player(TextureRegion img){
+    public Player(TextureRegion img, TextureRegion img2){
         sprite = new Sprite(img);
+        inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
+        inventory = new Object[3];
     }
 
     // maps keys to actions
@@ -49,7 +57,13 @@ public class Player {
     public void Draw(SpriteBatch batch){
         Update(Gdx.graphics.getDeltaTime());
         sprite.setPosition(position.x, position.y);
+
         sprite.setSize(50,50);
+
+        inventorySprite.setPosition(position.x+300, position.y);
+        if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){
+        inventorySprite.draw(batch);}
+
         sprite.draw(batch);
 
     }

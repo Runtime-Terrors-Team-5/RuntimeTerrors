@@ -43,9 +43,9 @@ public class Play_Screen implements Screen {
         this.game = game;
 
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
-        chef1 = new Player(atlas.findRegion("C_Blue_N"));
-        chef2 = new Player(atlas.findRegion("C_Green_N"));
-        chef3 = new Player(atlas.findRegion("C_Red_N"));
+        chef1 = new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"));
+        chef2 = new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"));
+        chef3 = new Player(atlas.findRegion("C_Red_N"),atlas.findRegion("M_Red_N"));
         chefSelection = new Player[]{chef1, chef2, chef3};
         chefPointer = 0;
 
@@ -75,10 +75,7 @@ public class Play_Screen implements Screen {
         chef2.Draw(game.batch);
         chef3.Draw(game.batch);
         game.batch.draw(chefSelection[chefPointer].sprite,0,400);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            chefPointer += 1;
-            if (chefPointer>chefSelection.length-1){chefPointer=0;}
-        }
+
         // game map
         renderer.render();
         game.batch.end();
@@ -102,6 +99,10 @@ public class Play_Screen implements Screen {
     public void handleInput(float dt){
         if(Gdx.input.isTouched()) {
             gamecam.position.y += 100 * dt;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            chefPointer += 1;
+            if (chefPointer>chefSelection.length-1){chefPointer=0;}
         }
 
     }
