@@ -16,12 +16,13 @@ public class Menu_Screen implements Screen {
     private Viewport game_port;
     private OrthographicCamera gamecam;
 
-    Texture texture; // temp
+    Texture menu; // temp
 
     public Menu_Screen(MyGame game){
         this.game = game;
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
+        menu = new Texture("Menu_Screen.png");
     }
     @Override
     public void show(){
@@ -30,11 +31,11 @@ public class Menu_Screen implements Screen {
 
     @Override
     public void render (float delta) {
-        ScreenUtils.clear(1, 0, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        //game.batch.draw(texture,0,0);
+        game.batch.draw(menu,0,0);
         game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
 
