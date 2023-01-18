@@ -20,7 +20,7 @@ public class Player {
     public Vector2 position;
     public Sprite sprite;
     public Sprite inventorySprite;
-    public Object[] inventory;
+    public foodItems[] inventory;
 
     public float speed = 300; // player movement speed
 
@@ -35,7 +35,7 @@ public class Player {
         inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
-        inventory = new Object[3];
+        inventory = new foodItems[3];
     }
 
     // maps keys to actions
