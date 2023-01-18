@@ -1,6 +1,4 @@
 package Screens;
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,10 +17,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
-import Sprites.Player;
+import com.mygdx.game.Player;
 
-
-public class  Play_Screen implements Screen {
+public class Play_Screen implements Screen {
     private MyGame game;
     Player chef1;
     Player chef2;
@@ -39,16 +36,14 @@ public class  Play_Screen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    /// box2d variables
-    //private World world;
-    //private Box2DDebugRenderer b2dr;
-
 
     Texture texture; // temp
 
     public Play_Screen(MyGame game){
         this.game = game;
-
+        maploader = new TmxMapLoader();
+        map = maploader.load("kitchen_map.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
         //Texture img = new Texture("Owlet_Monster.png");
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
         chef1 = new Player(atlas.findRegion("C_Blue_N"));
@@ -59,12 +54,9 @@ public class  Play_Screen implements Screen {
 
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
-        maploader = new TmxMapLoader();
-        map = maploader.load("kitchen_map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
 
-        //world = new World(new Vector2(0,0), true);
-        gamecam.position.set(game_port.getWorldWidth() / 2, ((game_port.getWorldHeight() / 2)-300), 0);
+
+        gamecam.position.set(game_port.getWorldWidth() / 2, game_port.getWorldHeight() / 2, 0);
     }
     @Override
     public void show(){
@@ -87,8 +79,6 @@ public class  Play_Screen implements Screen {
             chefPointer += 1;
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
         }
-
-        renderer.setView(gamecam);
         renderer.render();
         game.batch.end();
     }
@@ -101,7 +91,6 @@ public class  Play_Screen implements Screen {
     // handles inputs
     public void update(float dt){
         handleInput(dt);
-
         gamecam.update();
         renderer.setView(gamecam);
 
