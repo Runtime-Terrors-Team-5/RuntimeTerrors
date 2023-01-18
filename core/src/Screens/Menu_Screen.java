@@ -36,8 +36,6 @@ public class Menu_Screen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         game.batch.draw(menu,0,0);
-        game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
 
         game.batch.end();
 
