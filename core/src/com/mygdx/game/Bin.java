@@ -1,4 +1,20 @@
 package com.mygdx.game;
 
-public class Bin {
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+
+import java.awt.Rectangle;
+public class Bin extends InteractiletileObject {
+    public Bin(World world, TiledMap map, Rectangle bounds){
+        super(world, map, bounds);
+        fixture.setUserData(this);
+
+
+    }
+
+    public void DisposeTrash(String trash){
+       
+
+    }
 }
