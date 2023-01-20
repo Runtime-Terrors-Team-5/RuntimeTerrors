@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Player;
+import com.mygdx.game.foodItems;
 
 public class Play_Screen implements Screen {
     private MyGame game;
@@ -59,6 +61,8 @@ public class Play_Screen implements Screen {
         chefSelection = new Player[]{chef1, chef2, chef3};
         chefPointer = 0;
 
+        foodItems temp = new foodItems("E_Onion");
+        chef1.inventory.addItem(temp);
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
         // loads kitchen map
@@ -237,6 +241,7 @@ public class Play_Screen implements Screen {
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
+        game.batch.draw(chef1.inventory.getIndex(0).getItemSprite(),0,500);
         game.font.draw(game.batch, "The Main game screen", 100, 400);
         chef1.Draw(game.batch);
         chef2.Draw(game.batch);
@@ -272,6 +277,8 @@ public class Play_Screen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             chefPointer += 1;
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
         }
 
     }
