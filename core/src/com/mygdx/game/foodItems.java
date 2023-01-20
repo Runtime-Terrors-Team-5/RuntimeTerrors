@@ -22,9 +22,8 @@ public class foodItems {
 
     public void fail(){stage=3;}
 
-    public TextureRegion getItemSprite(){
+    public TextureRegion getItemSprite() {
         System.out.println(stage);
-        return atlas.findRegion(itemName,stage);}
-
-
+        return atlas.findRegion(itemName, stage);
+    }
 }

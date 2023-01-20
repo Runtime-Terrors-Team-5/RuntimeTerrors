@@ -54,15 +54,18 @@ public class Play_Screen implements Screen {
     public Play_Screen(MyGame game){
         this.game = game;
 
-        atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V1.atlas"));
-        chef1 = new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"));
-        chef2 = new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"));
-        chef3 = new Player(atlas.findRegion("C_Red_N"),atlas.findRegion("M_Red_N"));
+        atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
+        chef1 = new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),atlas.findRegion("M_Blue_C123"));
+        chef2 = new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),atlas.findRegion("M_Green_C123"));
+        chef3 = new Player(atlas.findRegion("C_Red_N"),atlas.findRegion("M_Red_N"),atlas.findRegion("M_Red_C123"));
         chefSelection = new Player[]{chef1, chef2, chef3};
         chefPointer = 0;
 
         foodItems temp = new foodItems("E_Onion");
         chef1.inventory.addItem(temp);
+        chef1.inventory.addItem(temp);
+        chef1.inventory.addItem(temp);
+
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
         // loads kitchen map
@@ -241,7 +244,13 @@ public class Play_Screen implements Screen {
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.batch.draw(chef1.inventory.getIndex(0).getItemSprite(),0,500);
+
+        game.batch.draw(chef1.inventory.getIndex(0).getItemSprite(), 0,500);
+        game.batch.draw(atlas.findRegion("E_Onion",0),0,600);
+        game.batch.draw(atlas.findRegion("E_Onion",1),0,700);
+        game.batch.draw(atlas.findRegion("E_Onion",2),0,800);
+        game.batch.draw(atlas.findRegion("E_Onion",3),0,900);
+
         game.font.draw(game.batch, "The Main game screen", 100, 400);
         chef1.Draw(game.batch);
         chef2.Draw(game.batch);
@@ -279,6 +288,7 @@ public class Play_Screen implements Screen {
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            System.out.println(chef1.inventory.getIndex(0));
         }
 
     }

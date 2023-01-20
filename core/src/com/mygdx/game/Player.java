@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import java.util.HashSet;
 
+import static java.lang.Math.round;
+
 
 public class Player {
 
@@ -30,9 +32,9 @@ public class Player {
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
     }
-    public Player(TextureRegion img, TextureRegion img2){
+    public Player(TextureRegion img, TextureRegion img2, TextureRegion img3){
         sprite = new Sprite(img);
-        inventory = new inventory();
+        inventory = new inventory(img2, img3);
         inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
@@ -62,9 +64,10 @@ public class Player {
 
         sprite.setSize(50,50);
 
-        inventorySprite.setPosition(position.x+300, position.y);
+        //inventorySprite.setPosition(, );
         if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){
-        inventorySprite.draw(batch);}
+            inventory.drawInventory(batch,position.x+300,position.y);
+        }
 
         sprite.draw(batch);
 
