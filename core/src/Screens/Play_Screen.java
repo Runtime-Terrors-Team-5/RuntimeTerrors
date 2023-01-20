@@ -61,10 +61,16 @@ public class Play_Screen implements Screen {
         chefSelection = new Player[]{chef1, chef2, chef3};
         chefPointer = 0;
 
-        foodItems temp = new foodItems("E_Onion");
-        chef1.inventory.addItem(temp);
-        chef1.inventory.addItem(temp);
-        chef1.inventory.addItem(temp);
+/*
+        foodItems temp1 = new foodItems("E_Salad");
+        foodItems temp2 = new foodItems("E_Burger");
+        foodItems temp3 = new foodItems("E_Bun");
+
+        chef1.inventory.addItem(temp1);
+        chef1.inventory.addItem(temp2);
+        chef1.inventory.addItem(temp3);
+*/
+
 
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
@@ -245,7 +251,6 @@ public class Play_Screen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
 
-        game.batch.draw(chef1.inventory.getIndex(0).getItemSprite(), 0,500);
         game.batch.draw(atlas.findRegion("E_Onion",0),0,600);
         game.batch.draw(atlas.findRegion("E_Onion",1),0,700);
         game.batch.draw(atlas.findRegion("E_Onion",2),0,800);

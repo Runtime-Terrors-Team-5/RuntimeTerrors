@@ -23,7 +23,7 @@ public class foodItems {
     public void fail(){stage=3;}
 
     public TextureRegion getItemSprite() {
-        System.out.println(stage);
+        //System.out.println(stage);
         return atlas.findRegion(itemName, stage);
     }
 }

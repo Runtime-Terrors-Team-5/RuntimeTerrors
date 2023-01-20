@@ -61,7 +61,7 @@ public class inventory {
 
         for (int i = 0; i < stack.length; i++) {
             if (stack[i]!= null){
-                batch.draw(stack[i].getItemSprite(),x+35,y+(i*70)+(i+1*10)+150);
+                batch.draw(stack[i].getItemSprite(),x+55,y+(i*70)+(i+1*10)+150);
             }
         }
 
