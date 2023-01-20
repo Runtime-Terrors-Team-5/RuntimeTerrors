@@ -20,7 +20,17 @@ public class foodItems {
         if (stage != 3){stage += 1;}
     }
 
-    public void fail(){stage=3;}
+    public void fail() {
+        if (itemName == "E_Bun") {
+            stage = 2;
+        } else {
+            stage = 3;
+        }
+    }
+
+    public String getItemName(){return itemName;}
+
+    public int getStage(){return stage;}
 
     public TextureRegion getItemSprite() {
         //System.out.println(stage);

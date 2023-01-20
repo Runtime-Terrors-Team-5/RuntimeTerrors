@@ -44,6 +44,8 @@ public class Player {
 
     // maps keys to actions
     public void Update(float deltaTime){
+        //runs a check to see if any recipes are craftable
+        inventory.craftableCheck();
         // WASD movement input processing
         // only allow this if the chef pointer is pointing to this chef
         if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){

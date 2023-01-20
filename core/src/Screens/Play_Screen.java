@@ -26,6 +26,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.foodItems;
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
+import org.javatuples.Tuple;
+
+import java.util.HashMap;
 
 public class Play_Screen implements Screen {
     private MyGame game;
@@ -34,6 +39,8 @@ public class Play_Screen implements Screen {
     Player chef3;
     public static Player[] chefSelection;
     public static int chefPointer;
+
+    public static HashMap recipes;
     // sets screen size
     private Viewport game_port;
     private OrthographicCamera gamecam;
@@ -54,6 +61,15 @@ public class Play_Screen implements Screen {
     public Play_Screen(MyGame game){
         this.game = game;
 
+        recipes = new HashMap<>();
+        recipes.put("E_Salad",new Triplet<>(new Pair<String, Integer>("E_Lettuce",2),
+                new Pair<String, Integer>("E_Tomato",2),
+                new Pair<String, Integer>("E_Onion",2)));
+        recipes.put("E_Burger",new Triplet<>(new Pair<String, Integer>("E_Lettuce",2),
+                new Pair<String, Integer>("E_Patty",2),
+                new Pair<String, Integer>("E_Bun",1)));
+
+
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
         chef1 = new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),atlas.findRegion("M_Blue_C123"));
         chef2 = new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),atlas.findRegion("M_Green_C123"));
@@ -62,10 +78,13 @@ public class Play_Screen implements Screen {
         chefPointer = 0;
 
 /*
-        foodItems temp1 = new foodItems("E_Salad");
-        foodItems temp2 = new foodItems("E_Burger");
+        foodItems temp1 = new foodItems("E_Lettuce");
+        foodItems temp2 = new foodItems("E_Patty");
         foodItems temp3 = new foodItems("E_Bun");
-
+        temp1.nextStage();
+        temp2.nextStage();
+        temp2.nextStage();
+        temp3.nextStage();
         chef1.inventory.addItem(temp1);
         chef1.inventory.addItem(temp2);
         chef1.inventory.addItem(temp3);
@@ -293,7 +312,14 @@ public class Play_Screen implements Screen {
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            System.out.println(chef1.inventory.getIndex(0));
+            chef1.inventory.stack[2].nextStage();
+
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C)){
+            if (chefSelection[chefPointer].inventory.isCraftable()){
+                chefSelection[chefPointer].inventory.craft();
+            }
+
         }
 
     }
