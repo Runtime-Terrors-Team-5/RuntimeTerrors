@@ -1,11 +1,17 @@
 package Screens;
+import Tools.World_contact_listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import com.badlogic.gdx.Game;
@@ -35,6 +41,10 @@ public class Play_Screen implements Screen {
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    // world  generation
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
 
 
     Texture texture; // temp
@@ -57,6 +67,163 @@ public class Play_Screen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map);
         // map camera
         gamecam.position.set(game_port.getWorldWidth(), game_port.getWorldHeight(), 0);
+        // sets no gravity and creates the world
+        world = new World(new Vector2(0,0), true);
+        b2dr = new Box2DDebugRenderer();
+        world.setContactListener(new World_contact_listener());
+        // identifies what the sprite has come into contact with
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        Body body;
+        FixtureDef fdef = new FixtureDef();
+        // Creates counters objects
+        for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        // creates service counter
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        // creates bin
+        for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+        // creates cutting stations
+        for (MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+        // creates stoves
+        for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        // creates tomato dispenser
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+        // creates lettuce dispenser
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+
+        // creates buns dispenser
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+        // creates patty dispenser
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
+        // creates onion dispenser
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+
     }
     @Override
     public void show(){
@@ -66,7 +233,7 @@ public class Play_Screen implements Screen {
     @Override
     public void render (float delta) {
         update(delta);
-        ScreenUtils.clear(0, 1, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
@@ -75,6 +242,8 @@ public class Play_Screen implements Screen {
         chef2.Draw(game.batch);
         chef3.Draw(game.batch);
         game.batch.draw(chefSelection[chefPointer].sprite,0,400);
+        // renderer the box2d lines
+        b2dr.render(world, gamecam.combined);
 
         // game map
         renderer.render();
