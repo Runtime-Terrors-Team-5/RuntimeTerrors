@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -61,15 +62,7 @@ public class Play_Screen implements Screen {
 
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
 
-        chefSelection = new Player[]{
-                new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),
-                        atlas.findRegion("M_Blue_C123")),
 
-                new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),
-                        atlas.findRegion("M_Green_C123"))
-        };
-
-        chefPointer = 0;
 
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
@@ -235,6 +228,15 @@ public class Play_Screen implements Screen {
             body.createFixture(fdef);
         }
 
+        chefSelection = new Player[]{
+                new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),
+                        atlas.findRegion("M_Blue_C123"), world),
+
+                new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),
+                        atlas.findRegion("M_Green_C123"), world)
+        };
+
+        chefPointer = 0;
 
     }
     @Override
@@ -290,8 +292,12 @@ public class Play_Screen implements Screen {
         }
         // test only to be removed
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            chefSelection[chefPointer].inventory.stack[2].nextStage();
-
+            Array<Body> bodies = new Array<Body>();
+            world.getBodies(bodies);
+            for (Body b:bodies){
+                System.out.println(b.getWorldCenter());
+                System.out.println(b.getUserData());
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)){
             if (chefSelection[chefPointer].inventory.isCraftable()){

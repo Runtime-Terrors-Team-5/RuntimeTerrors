@@ -9,15 +9,14 @@ import com.badlogic.gdx.Input.Keys;
 import Screens.Play_Screen;
 
 
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-
-import java.util.HashSet;
+import com.badlogic.gdx.physics.box2d.*;
 
 import static java.lang.Math.round;
 
 
 public class Player {
 
+    private final World world;
     // attributes
     public Vector2 position;
     public Sprite sprite;
@@ -27,19 +26,24 @@ public class Player {
     public float speed = 300; // player movement speed
 
     // methods
-    public Player(Texture img){
-        sprite = new Sprite(img);
-        sprite.setScale(2);
-        position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
-    }
-    public Player(TextureRegion img, TextureRegion img2, TextureRegion img3){
+    public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
         sprite = new Sprite(img);
         inventory = new inventory(img2, img3);
         inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
+        this.world = world;
 
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(position);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        Body b2body = world.createBody(bdef);
 
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(sprite.getX()/2, sprite.getY()/2);
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        b2body.createFixture(fdef).setUserData(this);
     }
 
     // maps keys to actions
