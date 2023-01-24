@@ -19,12 +19,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.MyGame;
-import com.mygdx.game.Player;
+import com.mygdx.game.*;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.HashMap;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Play_Screen implements Screen {
     private MyGame game;
@@ -83,6 +85,7 @@ public class Play_Screen implements Screen {
         Body body;
         FixtureDef fdef = new FixtureDef();
         // Creates counters objects
+
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             
@@ -111,16 +114,7 @@ public class Play_Screen implements Screen {
 
         // creates bin
         for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Bin(world,map,object);
         }
 
 
@@ -237,8 +231,18 @@ public class Play_Screen implements Screen {
         };
 
         chefPointer = 0;
+        // test only
+        foodItems item = new foodItems("E_Onion");
+        chefSelection[chefPointer].inventory.addItem(item);
 
     }
+
+    public World getWorld() {
+        return world;
+    }
+
+
+
     @Override
     public void show(){
 
@@ -295,8 +299,14 @@ public class Play_Screen implements Screen {
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
             for (Body b:bodies){
-                System.out.println(b.getWorldCenter());
-                System.out.println(b.getUserData());
+                //System.out.println(b.getWorldCenter());
+                //System.out.println(b.getUserData());
+                if (sqrt(pow(b.getPosition().x-chefSelection[chefPointer].position.x,2) +
+                        pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 100){
+                    System.out.println(b.getFixtureList().get(0).getUserData());
+                    Bin temp = (Bin) b.getFixtureList().get(0).getUserData();
+                    temp.DisposeTrash(chefSelection[chefPointer]);
+                }
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)){
