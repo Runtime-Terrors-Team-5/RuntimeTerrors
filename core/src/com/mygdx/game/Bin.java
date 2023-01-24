@@ -14,7 +14,7 @@ public class Bin extends InteractiletileObject {
     }
 
     public void DisposeTrash(String trash){
-       
+
 
     }
 }
