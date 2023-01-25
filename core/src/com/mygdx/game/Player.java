@@ -60,6 +60,7 @@ public class Player {
         inventory.craftableCheck();
         // WASD movement input processing
         // only allow this if the chef pointer is pointing to this chef
+        // checks for collisions by rnnning a loop
         this.Rectangle = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
@@ -75,7 +76,7 @@ public class Player {
 
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
 
-
+                   // player movement input
                 if (Gdx.input.isKeyPressed(Keys.A)) position.x -= 0.3;
                 if (Gdx.input.isKeyPressed(Keys.D)) position.x += 0.3;
                 if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.3;
@@ -87,11 +88,8 @@ public class Player {
                 if (position.x + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)>= 0){position.x += 5;}
                 if (position.y + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)>= 0){position.y += 5;}
             }
-        // stops player from moving out of the window boundaries
-        //if(position.x-(sprite.getWidth()*sprite.getScaleX()/2)<=0) position.x = (sprite.getWidth()*sprite.getScaleX()/2);
-        //if(position.x+(sprite.getWidth()*sprite.getScaleX()/2)>=Gdx.graphics.getWidth()) position.x = Gdx.graphics.getWidth()-(sprite.getWidth()*sprite.getScaleX()/2);
-        //if(position.y-(sprite.getHeight()*sprite.getScaleY()/2)<=0) position.y = (sprite.getHeight()*sprite.getScaleY()/2);
-        //if(position.y+(sprite.getHeight()*sprite.getScaleY()/2)>=Gdx.graphics.getHeight()) position.y = Gdx.graphics.getHeight()-(sprite.getHeight()*sprite.getScaleY()/2);
+
+
     }}
 
     public void Draw(SpriteBatch batch){
