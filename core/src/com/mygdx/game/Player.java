@@ -75,12 +75,19 @@ public class Player {
 
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
 
-                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= deltaTime * speed;
-                if (Gdx.input.isKeyPressed(Keys.D)) position.x += deltaTime * speed;
-                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= deltaTime * speed;
-                if (Gdx.input.isKeyPressed(Keys.W)) position.y += deltaTime * speed;
+
+                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= 0.3;
+                if (Gdx.input.isKeyPressed(Keys.D)) position.x += 0.3;
+                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.5;
+                if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.5;
             }
-            else{System.out.println("Collision Occured");}
+            else{
+                System.out.println("Collision Occured");
+                if (position.x - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)<= 0){position.x -= 5;}
+                if (position.y - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)<= 0){position.y -= 5;}
+                if (position.x + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)>= 0){position.x += 5;}
+                if (position.y + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)>= 0){position.y += 5;}
+            }
         // stops player from moving out of the window boundaries
         //if(position.x-(sprite.getWidth()*sprite.getScaleX()/2)<=0) position.x = (sprite.getWidth()*sprite.getScaleX()/2);
         //if(position.x+(sprite.getWidth()*sprite.getScaleX()/2)>=Gdx.graphics.getWidth()) position.x = Gdx.graphics.getWidth()-(sprite.getWidth()*sprite.getScaleX()/2);
