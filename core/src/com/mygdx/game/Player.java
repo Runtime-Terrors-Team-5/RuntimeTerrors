@@ -82,7 +82,6 @@ public class Player {
                 if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.3;
             }
             else{
-                System.out.println("Collision Occured");
                 if (position.x - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)<= 0){position.x -= 5;}
                 if (position.y - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)<= 0){position.y -= 5;}
                 if (position.x + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)>= 0){position.x += 5;}

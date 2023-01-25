@@ -1,12 +1,11 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-
-import java.awt.*;
 
 public class InteractivetileObject {
 
@@ -14,6 +13,7 @@ public class InteractivetileObject {
     protected World world;
     protected TiledMap map;
     protected Rectangle bounds;
+    protected foodItems currentItem;
     protected Body body;
     protected Fixture fixture;
     protected String Item;
@@ -37,15 +37,24 @@ public class InteractivetileObject {
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
+
     }
 
 
     public Rectangle getRect(){
         return bounds;
     }
+
+    public void progress(float dt){}
+
+    public foodItems getCurrentItem(){return currentItem;}
+    public boolean isProgressable(){
+        return false;
+    }
     public void DisposeTrash(Player chef) {
     }
 
+    public void drawProgress(Batch batch){}
 
     public void DispenseItem(Player player) {
     }

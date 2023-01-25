@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -25,6 +26,7 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
@@ -35,6 +37,7 @@ public class Play_Screen implements Screen {
     public static Player[] chefSelection;
     public static int chefPointer;
 
+    public static HashSet<InteractivetileObject> activeStations;
     public static HashMap recipes;
     // sets screen size
     private Viewport game_port;
@@ -65,7 +68,7 @@ public class Play_Screen implements Screen {
 
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
 
-
+        activeStations = new HashSet<>();
 
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT ,gamecam);
@@ -101,6 +104,7 @@ public class Play_Screen implements Screen {
         // Creates counters objects
 
 
+
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             new Counters(world,map,object);
         }
@@ -127,16 +131,7 @@ public class Play_Screen implements Screen {
 
         // creates cutting stations
         for (MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Cutting_Counter(world,map,object);
         }
 
 
@@ -207,18 +202,21 @@ public class Play_Screen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
 
-        game.font.draw(game.batch, "The Main game screen", 100, 400);
 
-        for (Player chefs:
-             chefSelection) {
-            chefs.Draw(game.batch);
-        }
-        game.batch.draw(chefSelection[chefPointer].sprite,0,400);
+
         // renderer the box2d lines
         b2dr.render(world, gamecam.combined);
 
         // game map
         renderer.render();
+
+        for (InteractivetileObject obj : activeStations) {
+                obj.drawProgress(game.batch);
+        }
+        for (Player chefs:
+                chefSelection) {
+            chefs.Draw(game.batch);
+        }
         game.batch.end();
     }
     @Override
@@ -230,6 +228,13 @@ public class Play_Screen implements Screen {
     // handles inputs
     public void update(float dt){
         handleInput(dt);
+        for (InteractivetileObject obj :
+                activeStations) {
+            if (obj.isProgressable()){
+                obj.progress(dt);
+            }
+        }
+
         gamecam.position.x = chefSelection[chefPointer].position.x;
         gamecam.position.y = chefSelection[chefPointer].position.y;
         gamecam.update();
@@ -245,8 +250,13 @@ public class Play_Screen implements Screen {
             chefPointer += 1;
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
         }
-        // test only to be removed
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            System.out.print(Gdx.input.getX());
+            System.out.print(" ");
+            System.out.println(Gdx.input.getY());
+        }
+        // test only to be removed
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
             for (Body b:bodies){
@@ -260,7 +270,12 @@ public class Play_Screen implements Screen {
 
                     InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
 
-                    if (b.getFixtureList().get(0).getUserData().getClass().equals(Bin.class)) {
+                    Vector3 mouse = gamecam.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+
+                    if (temp.getRect().getX() < mouse.x & mouse.x < temp.getRect().getX() + temp.getRect().getWidth()){
+                    if (temp.getRect().getY() < mouse.y & mouse.y < temp.getRect().getY() + temp.getRect().getHeight()){
+
+                    if (temp.getClass().equals(Bin.class)) {
                         temp.DisposeTrash(chefSelection[chefPointer]);
                     }
                     else if (temp.getClass().equals(Onion_dispenser.class)) {
@@ -281,6 +296,15 @@ public class Play_Screen implements Screen {
                     else if (temp.getClass().equals(Lettuce_dispenser.class)) {
                         temp.DispenseItem(chefSelection[chefPointer]);
                     }
+
+                    else if (temp.getClass().equals(Cutting_Counter.class)) {
+                        if (temp.getCurrentItem()==null){
+                            ((Cutting_Counter) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                        }
+                        else{((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);}
+                    }
+
+                    }}
                 }
             }
         }
