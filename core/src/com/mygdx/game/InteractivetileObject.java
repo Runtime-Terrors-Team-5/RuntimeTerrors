@@ -31,15 +31,21 @@ public class InteractivetileObject {
         bdef.position.set((float) (bounds.getX() + bounds.getWidth()/2), (float) (bounds.getY()+bounds.getHeight()/10));
 
         body = world.createBody(bdef);
-        shape.setAsBox(bounds.getX()/2, bounds.getY()/10);
+        shape.setAsBox(bounds.getX()/2/10, bounds.getY()/2/20);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
     }
 
+
+    public Rectangle getRect(){
+        return bounds;
+    }
     public void DisposeTrash(Player chef) {
 
     }
 
 
+    public void DispenseItem(Player player) {
+    }
 }

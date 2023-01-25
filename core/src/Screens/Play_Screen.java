@@ -81,11 +81,6 @@ public class Play_Screen implements Screen {
         world.setContactListener(new World_contact_listener());
         // identifies what the sprite has come into contact with
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        Body body;
-        FixtureDef fdef = new FixtureDef();
-        // Creates counters objects
         chefSelection = new Player[]{
                 new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),
                         atlas.findRegion("M_Blue_C123"), world),
@@ -98,6 +93,13 @@ public class Play_Screen implements Screen {
         // test only
         foodItems item = new foodItems("E_Onion");
         chefSelection[chefPointer].inventory.addItem(item);
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        Body body;
+        FixtureDef fdef = new FixtureDef();
+        // Creates counters objects
+
 
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -227,16 +229,7 @@ public class Play_Screen implements Screen {
 
         // creates onion dispenser
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Onion_dispenser(world,map,object);
         }
 
 
@@ -309,9 +302,18 @@ public class Play_Screen implements Screen {
                 //System.out.println(b.getUserData());
                 if (sqrt(pow(b.getPosition().x-chefSelection[chefPointer].position.x,2) +
                         pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 100){
-                    System.out.println(b.getFixtureList().get(0).getUserData());
-                    Bin temp = (Bin) b.getFixtureList().get(0).getUserData();
-                    temp.DisposeTrash(chefSelection[chefPointer]);
+                    //System.out.println(b.getFixtureList().get(0).getUserData().getClass());
+                    if (b.getFixtureList().get(0).getUserData() != null){
+                    if (b.getFixtureList().get(0).getUserData().getClass().equals(Bin.class)) {
+                        InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
+                        temp.DisposeTrash(chefSelection[chefPointer]);
+                    }
+                        if (b.getFixtureList().get(0).getUserData().getClass().equals(Onion_dispenser.class)) {
+                            InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
+                            temp.DispenseItem(chefSelection[chefPointer]);
+                        }
+                        b.getFixtureList().get(0).getShape();
+                    }
                 }
             }
         }

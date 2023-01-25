@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input.Keys;
@@ -11,6 +12,7 @@ import Screens.Play_Screen;
 
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 
 import static java.lang.Math.round;
 
@@ -45,10 +47,11 @@ public class Player {
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(sprite.getX()/2, sprite.getY()/2);
+
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-        this.Rectangle = sprite.getBoundingRectangle();
+        this.Rectangle = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
     // maps keys to actions
@@ -57,11 +60,29 @@ public class Player {
         inventory.craftableCheck();
         // WASD movement input processing
         // only allow this if the chef pointer is pointing to this chef
-        if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){
-        if(Gdx.input.isKeyPressed(Keys.A)) position.x-=deltaTime*speed;
-        if(Gdx.input.isKeyPressed(Keys.D)) position.x+=deltaTime*speed;
-        if(Gdx.input.isKeyPressed(Keys.S)) position.y-=deltaTime*speed;
-        if(Gdx.input.isKeyPressed(Keys.W)) position.y+=deltaTime*speed;
+        this.Rectangle = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body b:bodies){
+
+            if (b.getFixtureList().get(0).getUserData()==null){continue;}
+
+            if (b.getFixtureList().get(0).getUserData().getClass().equals(Player.class)){continue;}
+
+            InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
+
+            if(Play_Screen.chefSelection[Play_Screen.chefPointer]!=this){continue;}
+
+            if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
+                System.out.println(temp.getRect().x);
+                System.out.println(Rectangle.x);
+                System.out.println("movable");
+                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.D)) position.x += deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.W)) position.y += deltaTime * speed;
+            }
+            else{System.out.println("Collision Occured");}
         // stops player from moving out of the window boundaries
         //if(position.x-(sprite.getWidth()*sprite.getScaleX()/2)<=0) position.x = (sprite.getWidth()*sprite.getScaleX()/2);
         //if(position.x+(sprite.getWidth()*sprite.getScaleX()/2)>=Gdx.graphics.getWidth()) position.x = Gdx.graphics.getWidth()-(sprite.getWidth()*sprite.getScaleX()/2);

@@ -54,6 +54,12 @@ public class inventory {
         return temp;
     }
 
+    public boolean isSpace(){
+        if (stack[2] == null){return true;}
+
+        else{return false;}
+    }
+
     public void drawInventory(SpriteBatch batch, float x, float y){
         //10,100
         if (craftable){
