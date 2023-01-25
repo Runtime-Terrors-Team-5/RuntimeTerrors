@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Onion_dispenser extends InteractivetileObject{
-    private final String Item;
 
     public Onion_dispenser(World world, TiledMap map, MapObject object){
         super(world, map, object);

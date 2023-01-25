@@ -156,62 +156,26 @@ public class Play_Screen implements Screen {
 
         // creates tomato dispenser
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Tomato_dispenser(world,map,object);
         }
 
 
         // creates lettuce dispenser
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Lettuce_dispenser(world,map,object);
         }
 
 
 
         // creates buns dispenser
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Bun_dispenser(world,map,object);
         }
 
 
         // creates patty dispenser
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
+            new Patty_dispenser(world,map,object);
         }
 
 
@@ -291,16 +255,31 @@ public class Play_Screen implements Screen {
                 if (sqrt(pow(b.getPosition().x-chefSelection[chefPointer].position.x,2) +
                         pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 100){
                     //System.out.println(b.getFixtureList().get(0).getUserData().getClass());
-                    if (b.getFixtureList().get(0).getUserData() != null){
+                    if (b.getFixtureList().get(0).getUserData() == null){continue;}
+                    if (b.getFixtureList().get(0).getUserData().getClass().equals(Player.class)){continue;}
+
+                    InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
+
                     if (b.getFixtureList().get(0).getUserData().getClass().equals(Bin.class)) {
-                        InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
                         temp.DisposeTrash(chefSelection[chefPointer]);
                     }
-                        if (b.getFixtureList().get(0).getUserData().getClass().equals(Onion_dispenser.class)) {
-                            InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
-                            temp.DispenseItem(chefSelection[chefPointer]);
-                        }
-                        b.getFixtureList().get(0).getShape();
+                    else if (temp.getClass().equals(Onion_dispenser.class)) {
+                        System.out.println("onion");
+                        temp.DispenseItem(chefSelection[chefPointer]);
+                    }
+                    else if (temp.getClass().equals(Patty_dispenser.class)) {
+                        System.out.println("patty");
+                        temp.DispenseItem(chefSelection[chefPointer]);
+                    }
+                    else if (temp.getClass().equals(Bun_dispenser.class)) {
+                        System.out.println("bun");
+                        temp.DispenseItem(chefSelection[chefPointer]);
+                    }
+                    else if (temp.getClass().equals(Tomato_dispenser.class)) {
+                        temp.DispenseItem(chefSelection[chefPointer]);
+                    }
+                    else if (temp.getClass().equals(Lettuce_dispenser.class)) {
+                        temp.DispenseItem(chefSelection[chefPointer]);
                     }
                 }
             }
@@ -311,6 +290,7 @@ public class Play_Screen implements Screen {
             }
 
         }
+
 
     }
     @Override

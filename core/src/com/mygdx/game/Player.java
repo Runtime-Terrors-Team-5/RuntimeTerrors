@@ -74,23 +74,13 @@ public class Player {
             if(Play_Screen.chefSelection[Play_Screen.chefPointer]!=this){continue;}
 
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
-                System.out.println(temp.getRect().x);
-                System.out.println(Rectangle.x);
-                System.out.println("movable");
-                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= 0.5;
-                if (Gdx.input.isKeyPressed(Keys.D)) position.x += 0.5;
-                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.5;
-                if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.5;
+
+                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.D)) position.x += deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= deltaTime * speed;
+                if (Gdx.input.isKeyPressed(Keys.W)) position.y += deltaTime * speed;
             }
-            else{
-                System.out.println("Collision Occured");
-                if (position.x - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)<= 0){position.x -= 0.5;}
-                if (position.y - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)<= 0){position.y -= 0.5;}
-                if (position.x + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)>= 0){position.x += 0.5;}
-                if (position.y + (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)>= 0){position.y += 0.5;}
-                //position.x += deltaTime * speed; // for -x
-               // position.y -= deltaTime * speed; // for +y
-            }
+            else{System.out.println("Collision Occured");}
         // stops player from moving out of the window boundaries
         //if(position.x-(sprite.getWidth()*sprite.getScaleX()/2)<=0) position.x = (sprite.getWidth()*sprite.getScaleX()/2);
         //if(position.x+(sprite.getWidth()*sprite.getScaleX()/2)>=Gdx.graphics.getWidth()) position.x = Gdx.graphics.getWidth()-(sprite.getWidth()*sprite.getScaleX()/2);
