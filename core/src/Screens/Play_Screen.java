@@ -1,5 +1,6 @@
 package Screens;
 
+import Scenes.Recipe_Hud;
 import Tools.World_contact_listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -25,8 +26,7 @@ import com.mygdx.game.*;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
@@ -52,6 +52,12 @@ public class Play_Screen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    // orders queue
+    public Queue<Object> Orders = new LinkedList<>();
+
+    // display orders
+    private Recipe_Hud hud;
+
 
 
 
@@ -64,6 +70,14 @@ public class Play_Screen implements Screen {
 
         recipes.put("E_Burger",
                 new Triplet<>(new Pair<>("E_Lettuce", 2), new Pair<>("E_Patty", 2), new Pair<>("E_Bun", 1)));
+        // sets up adding the orders to be made in the scenario
+        Orders.add(recipes.get("E_Salad"));
+        Orders.add(recipes.get("E_Burger"));
+        Orders.add(recipes.get("E_Salad"));
+
+        // displaying recipes Hud
+        hud = new Recipe_Hud(game.batch);
+        
 
 
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
@@ -111,16 +125,8 @@ public class Play_Screen implements Screen {
 
         // creates service counter
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Service_Counter(world,map,object);
 
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
         }
 
         // creates bin
@@ -200,7 +206,10 @@ public class Play_Screen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
+        //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
         game.batch.begin();
+
 
 
 
