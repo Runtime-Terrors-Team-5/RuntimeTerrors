@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import java.awt.*;
 
-public class InteractiletileObject {
+public class InteractivetileObject {
 
     protected World world;
     protected TiledMap map;
@@ -13,7 +13,7 @@ public class InteractiletileObject {
     protected Body body;
     protected Fixture fixture;
 
-    public InteractiletileObject(World world, TiledMap map, Rectangle bounds){
+    public InteractivetileObject(World world, TiledMap map, Rectangle bounds){
         this.world = world;
         this.map = map;
         this.bounds = bounds;
