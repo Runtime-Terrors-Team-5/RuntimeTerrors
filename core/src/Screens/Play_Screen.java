@@ -143,16 +143,8 @@ public class Play_Screen implements Screen {
 
         // creates stoves
         for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            new Cooking_station(world,map,object);
 
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-
-            fdef.shape = shape;
-            body.createFixture(fdef);
         }
 
         // creates tomato dispenser
@@ -209,9 +201,6 @@ public class Play_Screen implements Screen {
         //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         game.batch.begin();
-
-
-
 
         // renderer the box2d lines
         b2dr.render(world, gamecam.combined);

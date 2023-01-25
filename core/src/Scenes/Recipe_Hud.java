@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.sun.org.apache.xpath.internal.operations.Or;
+import jdk.internal.org.jline.terminal.Size;
 
 public class Recipe_Hud {
     public Stage stage;
@@ -32,20 +33,24 @@ public class Recipe_Hud {
         Recipe1 = new Label(("1:"+Lettuce), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Recipe2 = new Label(("2:"+Burger), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Recipe3 = new Label(("3:"+Lettuce), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Orders.setScale(2,2);
-        Recipe1.setScale(10,10);
-        Recipe3.setScale(10,10);
-        Recipe2.setScale(10,10);
 
-        table.add(Orders).expandX();
+
+        table.add(Orders).left();
         table.row();
-        table.add(Recipe1).expandX();
+        table.add(Recipe1).left();
         table.row();
-        table.add(Recipe2).expandX();
+        table.add(Recipe2).left();
         table.row();
-        table.add(Recipe3).expandX();
+        table.add(Recipe3).left();
         table.row();
+        table.left().left();
+
+
+        table.setOrigin(0,0);
         stage.addActor(table);
+
+
+
         }
 
 
