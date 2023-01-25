@@ -1,6 +1,8 @@
 package Screens;
 
 import Scenes.Hud;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,6 +36,10 @@ public class Credit_Screen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) ) {
+            game.setScreen(new Menu_Screen(game));
+            dispose();
+        }
     }
     @Override
     public void resize(int width, int height){
