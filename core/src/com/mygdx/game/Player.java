@@ -78,8 +78,8 @@ public class Player {
 
                 if (Gdx.input.isKeyPressed(Keys.A)) position.x -= 0.3;
                 if (Gdx.input.isKeyPressed(Keys.D)) position.x += 0.3;
-                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.5;
-                if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.5;
+                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.3;
+                if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.3;
             }
             else{
                 System.out.println("Collision Occured");
