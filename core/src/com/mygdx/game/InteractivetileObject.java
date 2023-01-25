@@ -16,6 +16,8 @@ public class InteractivetileObject {
     protected Rectangle bounds;
     protected Body body;
     protected Fixture fixture;
+    protected String Item;
+
 
     public InteractivetileObject(World world, TiledMap map, MapObject object){
         this.world = world;
@@ -31,7 +33,7 @@ public class InteractivetileObject {
         bdef.position.set((float) (bounds.getX() + bounds.getWidth()/2), (float) (bounds.getY()+bounds.getHeight()/10));
 
         body = world.createBody(bdef);
-        shape.setAsBox(bounds.getX()/2/10, bounds.getY()/2/20);
+        shape.setAsBox(bounds.getX()/2/3, bounds.getY()/2/10);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
@@ -42,7 +44,6 @@ public class InteractivetileObject {
         return bounds;
     }
     public void DisposeTrash(Player chef) {
-
     }
 
 

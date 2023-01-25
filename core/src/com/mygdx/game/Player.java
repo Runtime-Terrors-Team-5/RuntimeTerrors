@@ -74,9 +74,7 @@ public class Player {
             if(Play_Screen.chefSelection[Play_Screen.chefPointer]!=this){continue;}
 
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
-                System.out.println(temp.getRect().x);
-                System.out.println(Rectangle.x);
-                System.out.println("movable");
+
                 if (Gdx.input.isKeyPressed(Keys.A)) position.x -= deltaTime * speed;
                 if (Gdx.input.isKeyPressed(Keys.D)) position.x += deltaTime * speed;
                 if (Gdx.input.isKeyPressed(Keys.S)) position.y -= deltaTime * speed;
