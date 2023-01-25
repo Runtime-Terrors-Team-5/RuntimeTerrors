@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Input.Keys;
 import Screens.Play_Screen;
@@ -25,6 +26,9 @@ public class Player {
 
     public float speed = 300; // player movement speed
 
+    // rectangle for collisions
+    public Rectangle Rectangle;
+
     // methods
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
         sprite = new Sprite(img);
@@ -44,6 +48,7 @@ public class Player {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
+        this.Rectangle = sprite.getBoundingRectangle();
     }
 
     // maps keys to actions
@@ -77,5 +82,9 @@ public class Player {
 
         sprite.draw(batch);
 
+    }
+
+    public com.badlogic.gdx.math.Rectangle getRectangle() {
+        return this.Rectangle;
     }
 }

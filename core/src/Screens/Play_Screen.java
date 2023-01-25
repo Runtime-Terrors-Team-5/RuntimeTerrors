@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -85,6 +86,18 @@ public class Play_Screen implements Screen {
         Body body;
         FixtureDef fdef = new FixtureDef();
         // Creates counters objects
+        chefSelection = new Player[]{
+                new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),
+                        atlas.findRegion("M_Blue_C123"), world),
+
+                new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),
+                        atlas.findRegion("M_Green_C123"), world)
+        };
+
+        chefPointer = 0;
+        // test only
+        foodItems item = new foodItems("E_Onion");
+        chefSelection[chefPointer].inventory.addItem(item);
 
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -96,6 +109,10 @@ public class Play_Screen implements Screen {
             shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
             fdef.shape = shape;
             body.createFixture(fdef);
+            if (Intersector.overlaps(rect, chefSelection[chefPointer].getRectangle())) {
+                System.out.println("Collision Occured");
+                // collision happened
+            }
         }
 
         // creates service counter
@@ -222,18 +239,7 @@ public class Play_Screen implements Screen {
             body.createFixture(fdef);
         }
 
-        chefSelection = new Player[]{
-                new Player(atlas.findRegion("C_Blue_N"),atlas.findRegion("M_Blue_N"),
-                        atlas.findRegion("M_Blue_C123"), world),
 
-                new Player(atlas.findRegion("C_Green_N"),atlas.findRegion("M_Green_N"),
-                        atlas.findRegion("M_Green_C123"), world)
-        };
-
-        chefPointer = 0;
-        // test only
-        foodItems item = new foodItems("E_Onion");
-        chefSelection[chefPointer].inventory.addItem(item);
 
     }
 
