@@ -55,7 +55,7 @@ public class Player {
     }
 
     // maps keys to actions
-    public void Update(float deltaTime){
+    public void Update(float deltaTime)                                                                                              {
         //runs a check to see if any recipes are craftable
         inventory.craftableCheck();
         // WASD movement input processing

@@ -52,11 +52,14 @@ public class Play_Screen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    // orders queue
+    // orders queue to be popped
     public Queue<Object> Orders = new LinkedList<>();
 
     // display orders
     private Recipe_Hud hud;
+
+    // completed game scenario boolean
+    public boolean Completed_scenario;
 
 
 
@@ -197,6 +200,12 @@ public class Play_Screen implements Screen {
         for (Player chefs: chefSelection) {
             chefs.Draw(game.batch);
         }
+        // game  scenario over condition, changes screen to score board or menu
+        if (Completed_scenario == true){
+            game.setScreen(new Menu_Screen(game));
+            dispose();
+        }
+
         game.batch.end();
 
         for (InteractivetileObject obj : activeStations) {
@@ -308,6 +317,13 @@ public class Play_Screen implements Screen {
                         }
                         else{((Counters) temp).removeItem(chefSelection[chefPointer]);}
                     }
+                    // TEMPORARY ; Adding order checking later
+                    // Scenario ending condition , and calculating if orders are right
+                    else if (temp.getClass().equals(Service_Counter.class)) {
+                        if(Orders.isEmpty()){
+                            Completed_scenario = true;
+                        }
+                        }
 
                     }}
                 }
