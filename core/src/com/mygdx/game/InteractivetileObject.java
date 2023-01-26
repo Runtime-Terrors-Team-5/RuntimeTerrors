@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -17,6 +20,9 @@ public class InteractivetileObject {
     protected Body body;
     protected Fixture fixture;
     protected String Item;
+
+    protected String[] AcceptableItems;
+
 
 
     public InteractivetileObject(World world, TiledMap map, MapObject object){
@@ -36,10 +42,7 @@ public class InteractivetileObject {
         shape.setAsBox(bounds.getX()/2/3, bounds.getY()/2/10);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
-
-
     }
-
 
     public Rectangle getRect(){
         return bounds;
@@ -54,8 +57,29 @@ public class InteractivetileObject {
     public void DisposeTrash(Player chef) {
     }
 
-    public void drawProgress(Batch batch){}
+    public void drawProgress(Batch batch, OrthographicCamera cam){}
 
     public void DispenseItem(Player player) {
     }
+
+    public boolean acceptableItem(String item){return false;}
+
+    protected void DrawProgressBar(OrthographicCamera cam, float progress){
+        ShapeRenderer shape = new ShapeRenderer();
+        //Draws the red background
+        shape.setProjectionMatrix(cam.combined);
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.setColor(Color.RED);
+        shape.rect(bounds.getX(), bounds.getY(), 95,20);
+        shape.end();
+        //Draws the green box progress being filled
+        shape.setProjectionMatrix(cam.combined);
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.setColor(Color.GREEN);
+        shape.rect(bounds.getX(), bounds.getY(), 95-(95*(progress/10)),20);
+        shape.end();
+        shape.dispose();
+    }
+
+
 }

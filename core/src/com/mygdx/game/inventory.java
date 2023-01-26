@@ -46,12 +46,18 @@ public class inventory {
         return false;
     }
 
+    //removes the head of the stack and returns it
     public foodItems returnHead(){
         foodItems temp = (foodItems) stack[0];
         stack[0] = stack[1];
         stack[1] = stack[2];
         stack[2] = null;
         return temp;
+    }
+
+    //looks and returns the head of the stack, makes no change
+    public foodItems checkHead(){
+        return stack[0];
     }
 
     public boolean isSpace(){

@@ -1,10 +1,13 @@
 package com.mygdx.game;
 
 import Screens.Play_Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+
+import java.util.Arrays;
 
 public class Cutting_Counter extends InteractivetileObject{
 
@@ -12,6 +15,7 @@ public class Cutting_Counter extends InteractivetileObject{
     public Cutting_Counter(World world, TiledMap map, MapObject object) {
         super(world, map, object);
         fixture.setUserData(this);
+        AcceptableItems = new String[]{"E_Onion","E_Lettuce","E_Tomato"};
         progress = 10;
     }
 
@@ -27,6 +31,7 @@ public class Cutting_Counter extends InteractivetileObject{
         chef.inventory.addItem(currentItem);
         Play_Screen.activeStations.remove(this);
         currentItem = null;
+        progress = 10;
     }
 
     public void progress(float dt){
@@ -37,7 +42,6 @@ public class Cutting_Counter extends InteractivetileObject{
                 progress = 10;
             }
         }
-        System.out.println(progress);
     }
 
     public boolean isProgressable(){
@@ -49,7 +53,17 @@ public class Cutting_Counter extends InteractivetileObject{
         return false;
     }
 
-    public void drawProgress(Batch batch){
+    public void drawProgress(Batch batch, OrthographicCamera cam){
+        DrawProgressBar(cam, progress);
+
+        batch.begin();
         batch.draw(currentItem.getItemSprite(),bounds.getX(),bounds.getY());
+        batch.end();
+    }
+
+    public boolean acceptableItem(String item){
+        if (Arrays.asList(AcceptableItems).contains(item)){return true;}
+
+        return false;
     }
 }

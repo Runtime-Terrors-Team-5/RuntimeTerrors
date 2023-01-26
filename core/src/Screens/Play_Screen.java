@@ -107,17 +107,12 @@ public class Play_Screen implements Screen {
         };
 
         chefPointer = 0;
-        // test only
-        foodItems item = new foodItems("E_Onion");
-        chefSelection[chefPointer].inventory.addItem(item);
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         Body body;
         FixtureDef fdef = new FixtureDef();
         // Creates counters objects
-
-
 
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             new Counters(world,map,object);
@@ -144,7 +139,6 @@ public class Play_Screen implements Screen {
         // creates stoves
         for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
             new Cooking_station(world,map,object);
-
         }
 
         // creates tomato dispenser
@@ -158,26 +152,20 @@ public class Play_Screen implements Screen {
             new Lettuce_dispenser(world,map,object);
         }
 
-
-
         // creates buns dispenser
         for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             new Bun_dispenser(world,map,object);
         }
-
 
         // creates patty dispenser
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             new Patty_dispenser(world,map,object);
         }
 
-
         // creates onion dispenser
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             new Onion_dispenser(world,map,object);
         }
-
-
 
     }
 
@@ -186,10 +174,8 @@ public class Play_Screen implements Screen {
     }
 
 
-
     @Override
     public void show(){
-
     }
 
     @Override
@@ -208,14 +194,16 @@ public class Play_Screen implements Screen {
         // game map
         renderer.render();
 
-        for (InteractivetileObject obj : activeStations) {
-                obj.drawProgress(game.batch);
-        }
-        for (Player chefs:
-                chefSelection) {
+        for (Player chefs: chefSelection) {
             chefs.Draw(game.batch);
         }
         game.batch.end();
+
+        for (InteractivetileObject obj : activeStations) {
+                obj.drawProgress(game.batch, gamecam);
+        }
+
+
     }
     @Override
     public void resize(int width, int height){
@@ -237,7 +225,6 @@ public class Play_Screen implements Screen {
         gamecam.position.y = chefSelection[chefPointer].position.y;
         gamecam.update();
         renderer.setView(gamecam);
-
     }
 
     public void handleInput(float dt){
@@ -253,16 +240,14 @@ public class Play_Screen implements Screen {
             System.out.print(" ");
             System.out.println(Gdx.input.getY());
         }
-        // test only to be removed
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
             for (Body b:bodies){
-                //System.out.println(b.getWorldCenter());
-                //System.out.println(b.getUserData());
+
                 if (sqrt(pow(b.getPosition().x-chefSelection[chefPointer].position.x,2) +
                         pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 100){
-                    //System.out.println(b.getFixtureList().get(0).getUserData().getClass());
                     if (b.getFixtureList().get(0).getUserData() == null){continue;}
                     if (b.getFixtureList().get(0).getUserData().getClass().equals(Player.class)){continue;}
 
@@ -297,23 +282,41 @@ public class Play_Screen implements Screen {
 
                     else if (temp.getClass().equals(Cutting_Counter.class)) {
                         if (temp.getCurrentItem()==null){
-                            ((Cutting_Counter) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                            foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
+                            if (temp.acceptableItem(tempItem.getItemName())) {
+                                ((Cutting_Counter) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                            }
                         }
                         else{((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);}
+                    }
+
+                    else if (temp.getClass().equals(Cooking_station.class)) {
+                        if (temp.getCurrentItem()==null){
+                            foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
+                            if (temp.acceptableItem(tempItem.getItemName())) {
+                                ((Cooking_station) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                            }
+                        }
+                        else{((Cooking_station) temp).removeItem(chefSelection[chefPointer]);}
+                    }
+
+                    else if (temp.getClass().equals(Counters.class)) {
+                        if (temp.getCurrentItem()==null){
+                            ((Counters) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                        }
+                        else{((Counters) temp).removeItem(chefSelection[chefPointer]);}
                     }
 
                     }}
                 }
             }
         }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)){
             if (chefSelection[chefPointer].inventory.isCraftable()){
                 chefSelection[chefPointer].inventory.craft();
             }
-
         }
-
-
     }
     @Override
     public void pause(){
