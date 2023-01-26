@@ -24,7 +24,7 @@ public class Recipe_Hud {
     public Recipe_Hud(SpriteBatch sb){
         String Burger = "Lettuce, Patty, Bun";
         String Lettuce = "Lettuce, Tomato, Onion";
-        viewport = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(MyGame.V_WIDTH*2, MyGame.V_HEIGHT*2, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Table table = new Table();
         table.setFillParent(true);

@@ -185,7 +185,7 @@ public class Play_Screen implements Screen {
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+
         game.batch.begin();
 
         // renderer the box2d lines
@@ -202,6 +202,8 @@ public class Play_Screen implements Screen {
         for (InteractivetileObject obj : activeStations) {
                 obj.drawProgress(game.batch, gamecam);
         }
+
+        hud.stage.draw();
 
 
     }
