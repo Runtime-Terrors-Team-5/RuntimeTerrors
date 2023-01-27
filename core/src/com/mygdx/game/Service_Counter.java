@@ -15,10 +15,8 @@ public class Service_Counter extends InteractivetileObject{
 
     }
 
-    public boolean CheckOrders(inventory Food, Queue<Object> Orders){
-        if (Orders.peek() == Food){
-            Orders.remove();
-            return true;}
+    public boolean CheckOrders(foodItems Food, Queue<String> Orders){
+        if (Orders.peek().equals(Food.getItemName())){return true;}
         else {return false;}
 
 

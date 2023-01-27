@@ -28,6 +28,7 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
@@ -54,7 +55,7 @@ public class Play_Screen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     // orders queue to be popped
-    public Queue<Object> Orders = new LinkedList<>();
+    public Queue<String> Orders = new LinkedList<>();
 
     // display orders
     private Recipe_Hud hud;
@@ -75,12 +76,13 @@ public class Play_Screen implements Screen {
         recipes.put("E_Burger",
                 new Triplet<>(new Pair<>("E_Lettuce", 2), new Pair<>("E_Patty", 2), new Pair<>("E_Bun", 1)));
         // sets up adding the orders to be made in the scenario
-        Orders.add(recipes.get("E_Salad"));
-        Orders.add(recipes.get("E_Burger"));
-        Orders.add(recipes.get("E_Salad"));
+        Set recipeItems = recipes.keySet();
+        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
+        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
+        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
 
         // displaying recipes Hud
-        hud = new Recipe_Hud(game.batch);
+        hud = new Recipe_Hud(game.batch, Orders);
         
 
 
@@ -322,9 +324,12 @@ public class Play_Screen implements Screen {
                     // Scenario ending condition , and calculating if orders are right
                     else if (temp.getClass().equals(Service_Counter.class)) {
                         if(Orders.isEmpty()){Completed_scenario = true;}   // pops the list if true and orders not empty
-                        else if (((Service_Counter) temp).CheckOrders(chefSelection[chefPointer].inventory , this.Orders)){
+
+                        else if (((Service_Counter) temp).CheckOrders(chefSelection[chefPointer].inventory.checkHead() , this.Orders)){
                             this.Orders.remove();
-                            if(Orders.isEmpty()){Completed_scenario = true;}
+                            chefSelection[chefPointer].inventory.returnHead();
+                            hud.updateHUB(Orders);
+                            //if(Orders.isEmpty()){Completed_scenario = true;}
                             // checks to see if its now empty after removal, automatically ending the game
 
                         }
