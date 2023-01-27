@@ -1,6 +1,7 @@
 package Screens;
 
 import Scenes.Recipe_Hud;
+import com.mygdx.game.Service_Counter;
 import Tools.World_contact_listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -317,12 +318,17 @@ public class Play_Screen implements Screen {
                         }
                         else{((Counters) temp).removeItem(chefSelection[chefPointer]);}
                     }
-                    // TEMPORARY ; Adding order checking later
+                    // classification of what the order made's type to be classed later
                     // Scenario ending condition , and calculating if orders are right
                     else if (temp.getClass().equals(Service_Counter.class)) {
-                        if(Orders.isEmpty()){
-                            Completed_scenario = true;
+                        if(Orders.isEmpty()){Completed_scenario = true;}   // pops the list if true and orders not empty
+                        else if (((Service_Counter) temp).CheckOrders(chefSelection[chefPointer].inventory , this.Orders)){
+                            this.Orders.remove();
+                            if(Orders.isEmpty()){Completed_scenario = true;}
+                            // checks to see if its now empty after removal, automatically ending the game
+
                         }
+
                         }
 
                     }}

@@ -1,9 +1,10 @@
 package com.mygdx.game;
-
+import Screens.Play_Screen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.Queue;
 import java.util.Stack;
 
 public class Service_Counter extends InteractivetileObject{
@@ -14,7 +15,12 @@ public class Service_Counter extends InteractivetileObject{
 
     }
 
-    public void CheckOrders(Stack Food){
+    public boolean CheckOrders(inventory Food, Queue<Object> Orders){
+        if (Orders.peek() == Food){
+            Orders.remove();
+            return true;}
+        else {return false;}
+
 
     }
 }
