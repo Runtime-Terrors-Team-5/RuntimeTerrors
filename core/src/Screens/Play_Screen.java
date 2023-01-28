@@ -187,7 +187,7 @@ public class Play_Screen implements Screen {
     @Override
     public void render (float delta) {
         update(delta);
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
