@@ -78,8 +78,8 @@ public class Play_Screen implements Screen {
         // sets up adding the orders to be made in the scenario
         Set recipeItems = recipes.keySet();
         Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
-        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
-        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
+        //Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
+        //Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
 
         // displaying recipes Hud
         hud = new Recipe_Hud(game.batch, Orders);
@@ -329,7 +329,7 @@ public class Play_Screen implements Screen {
                             this.Orders.remove();
                             chefSelection[chefPointer].inventory.returnHead();
                             hud.updateHUB(Orders);
-                            //if(Orders.isEmpty()){Completed_scenario = true;}
+                            if(Orders.isEmpty()){Completed_scenario = true;}
                             // checks to see if its now empty after removal, automatically ending the game
 
                         }
