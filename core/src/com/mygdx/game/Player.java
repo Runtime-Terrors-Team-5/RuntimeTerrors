@@ -77,10 +77,10 @@ public class Player {
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
 
                    // player movement input
-                if (Gdx.input.isKeyPressed(Keys.A)) position.x -= 0.3;
-                if (Gdx.input.isKeyPressed(Keys.D)) position.x += 0.3;
-                if (Gdx.input.isKeyPressed(Keys.S)) position.y -= 0.3;
-                if (Gdx.input.isKeyPressed(Keys.W)) position.y += 0.3;
+                if (Gdx.input.isKeyPressed(Keys.A)) {position.x -= 0.2;}
+                if (Gdx.input.isKeyPressed(Keys.D)) {position.x += 0.2;}
+                if (Gdx.input.isKeyPressed(Keys.S)) {position.y -= 0.2;}
+                if (Gdx.input.isKeyPressed(Keys.W)) {position.y += 0.2;}
             }
             else{
                 if (position.x - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)<= 0){position.x -= 5;}

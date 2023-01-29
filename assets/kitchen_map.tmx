@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="45">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="16" nextobjectid="52">
  <tileset firstgid="1" source="ENG1_Assets_V1.tsx"/>
  <tileset firstgid="401" source="ENG_Assets_V2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="100" height="100">
@@ -31,7 +31,9 @@
   <object id="44" x="223.334" y="604.667" width="96.6666" height="97.3334"/>
  </objectgroup>
  <objectgroup id="6" name="Bins">
-  <object id="35" x="321.333" y="217.333" width="198" height="96"/>
+  <object id="49" x="417.333" y="233.333" width="91.9997" height="82.6667"/>
+  <object id="50" x="317.333" y="229.333" width="97.3333" height="85.3333"/>
+  <object id="51" x="512" y="232" width="97.333" height="82.6667"/>
  </objectgroup>
  <objectgroup id="7" name="Counters">
   <object id="11" x="223.334" y="220.667" width="98" height="91.3333"/>

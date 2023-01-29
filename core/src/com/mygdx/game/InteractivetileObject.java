@@ -36,7 +36,7 @@ public class InteractivetileObject {
         PolygonShape shape = new PolygonShape();
         bdef.type = BodyDef.BodyType.StaticBody;
         // can add / Mygame.PPM
-        bdef.position.set((float) (bounds.getX() + bounds.getWidth()/2), (float) (bounds.getY()+bounds.getHeight()/2));
+        bdef.position.set((float) (bounds.getX() + 50 ), (float) (bounds.getY()+50));
         System.out.println(String.format("X:%s Y:%s",bounds.getWidth(),bounds.getHeight()));
         body = world.createBody(bdef);
         shape.setAsBox(bounds.getWidth()/2, bounds.getHeight()/2);
