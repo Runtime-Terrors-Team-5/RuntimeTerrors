@@ -55,7 +55,8 @@ public class Play_Screen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     // orders queue to be popped
-    public Queue<String> Orders = new LinkedList<>();
+    //public Queue<String> Orders = new LinkedList<>();
+    public Queue<customer> Orders = new LinkedList<>();
 
     // display orders
     private Recipe_Hud hud;
@@ -68,6 +69,7 @@ public class Play_Screen implements Screen {
 
     public Play_Screen(MyGame game){
         this.game = game;
+        atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
 
         recipes = new HashMap<>();
         recipes.put("E_Salad",
@@ -77,7 +79,11 @@ public class Play_Screen implements Screen {
                 new Triplet<>(new Pair<>("E_Lettuce", 2), new Pair<>("E_Patty", 2), new Pair<>("E_Bun", 1)));
         // sets up adding the orders to be made in the scenario
         Set recipeItems = recipes.keySet();
-        Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
+        for (int i = 0; i < 3; i++) {
+            String temp = (String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())];
+            Orders.add(new customer(new foodItems(temp),atlas));
+        }
+
         //Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
         //Orders.add((String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())]);
 
@@ -86,7 +92,7 @@ public class Play_Screen implements Screen {
         
 
 
-        atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
+
 
         activeStations = new HashSet<>();
 
@@ -200,6 +206,14 @@ public class Play_Screen implements Screen {
         // game map
         renderer.render();
 
+        //draw customer with order
+        for (int i = 0; i < Orders.size(); i++) {
+            customer temp = (customer) Orders.toArray()[i];
+            game.batch.draw(temp.getOrderSprite(),1000+(i*100),770);
+            game.batch.draw(temp.getSprite(),1000+(i*100),720);
+        }
+
+
         for (Player chefs: chefSelection) {
             chefs.Draw(game.batch);
         }
@@ -297,6 +311,7 @@ public class Play_Screen implements Screen {
                     else if (temp.getClass().equals(Cutting_Counter.class)) {
                         if (temp.getCurrentItem()==null){
                             foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
+                            if (tempItem==null){continue;}
                             if (temp.acceptableItem(tempItem.getItemName())) {
                                 ((Cutting_Counter) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
                             }
@@ -307,6 +322,7 @@ public class Play_Screen implements Screen {
                     else if (temp.getClass().equals(Cooking_station.class)) {
                         if (temp.getCurrentItem()==null){
                             foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
+                            if (tempItem==null){continue;}
                             if (temp.acceptableItem(tempItem.getItemName())) {
                                 ((Cooking_station) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
                             }
@@ -323,6 +339,7 @@ public class Play_Screen implements Screen {
                     // classification of what the order made's type to be classed later
                     // Scenario ending condition , and calculating if orders are right
                     else if (temp.getClass().equals(Service_Counter.class)) {
+                        if(chefSelection[chefPointer].inventory.checkHead()==null){continue;}
                         if(Orders.isEmpty()){Completed_scenario = true;}   // pops the list if true and orders not empty
 
                         else if (((Service_Counter) temp).CheckOrders(chefSelection[chefPointer].inventory.checkHead() , this.Orders)){

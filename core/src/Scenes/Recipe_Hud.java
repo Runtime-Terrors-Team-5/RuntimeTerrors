@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import jdk.internal.org.jline.terminal.Size;
+import com.mygdx.game.customer;
+import com.mygdx.game.foodItems;
 
 import java.util.Queue;
 
@@ -23,7 +23,7 @@ public class Recipe_Hud {
     Label Recipe2;
     Label Recipe3;
 
-    public Recipe_Hud(SpriteBatch sb, Queue<String> Orders){
+    public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders){
         String Burger = "Lettuce, Patty, Bun";
         String Lettuce = "Lettuce, Tomato, Onion";
         viewport = new FitViewport(MyGame.V_WIDTH*2, MyGame.V_HEIGHT*2, new OrthographicCamera());
@@ -41,9 +41,9 @@ public class Recipe_Hud {
         table.add(OrdersLabel).left();
         table.row();
         for (int i=0;i< Orders.size();i++){
-            String temp = (String) Orders.toArray()[i];
-            temp = temp.substring(2);
-            Recipe1 = new Label((i+1)+": "+temp, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+            customer temp = (customer) Orders.toArray()[i];
+            String name = temp.getItemName().substring(2);
+            Recipe1 = new Label((i+1)+": "+name, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             table.add(Recipe1).left();
             table.row();
         }
@@ -65,16 +65,16 @@ public class Recipe_Hud {
 
         }
 
-        public void updateHUB(Queue<String> Orders){
+        public void updateHUB(Queue<customer> Orders){
             stage.clear();
             Table table = new Table();
             table.setFillParent(true);
             table.add(OrdersLabel).left();
             table.row();
             for (int i=0;i< Orders.size();i++){
-                String temp = (String) Orders.toArray()[i];
-                temp = temp.substring(2);
-                Recipe1 = new Label(i+": "+temp, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                customer temp = (customer) Orders.toArray()[i];
+                String name = temp.getItemName().substring(2);
+                Recipe1 = new Label((i+1)+": "+name, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
                 table.add(Recipe1).left();
                 table.row();
             }
