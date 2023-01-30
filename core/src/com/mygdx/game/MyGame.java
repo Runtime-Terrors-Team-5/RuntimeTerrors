@@ -21,13 +21,6 @@ public class MyGame extends Game {
 	public static final int V_WIDTH = 400;
 
 	public static final int V_HEIGHT = 200;
-
-
-	
-	@Override
-	// format for loading assets into game
-	// dropImage = new Texture(Gdx.files.internal("droplet.png"));
-
 	// load the drop sound effect and the rain background "music"
 	//dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
 	//rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
@@ -35,6 +28,7 @@ public class MyGame extends Game {
 	// start the playback of the background music immediately
     //  rainMusic.setLooping(true);
     //  rainMusic.play();
+	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -45,9 +39,6 @@ public class MyGame extends Game {
 
 	@Override
 	public void render () {
-		//ScreenUtils.clear(0, 0, 0, 1);
-		//batch.begin();
-		//batch.end();
 		// delegates render to active screen
 		super.render();
 
