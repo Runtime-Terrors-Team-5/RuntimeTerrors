@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Bun_dispenser extends InteractivetileObject{
+public class Bun_dispenser extends InteractivetileObject {
 
     public Bun_dispenser(World world, TiledMap map, MapObject object) {
         super(world, map, object);
@@ -12,7 +12,8 @@ public class Bun_dispenser extends InteractivetileObject{
         this.Item = "E_Bun";
 
     }
-    public void DispenseItem(Player chef){
+
+    public void DispenseItem(Player chef) {
         if (chef.inventory.isSpace()) {
             chef.inventory.addItem(new foodItems(Item));
         }

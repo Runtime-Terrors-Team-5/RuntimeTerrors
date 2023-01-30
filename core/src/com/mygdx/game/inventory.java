@@ -1,15 +1,14 @@
 package com.mygdx.game;
 
+import static Screens.Play_Screen.recipes;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.javatuples.Pair;
-import org.javatuples.Triplet;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-
-import static Screens.Play_Screen.recipes;
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
 
 public class inventory {
 
@@ -18,28 +17,29 @@ public class inventory {
     private TextureRegion craftableImg;
     private boolean craftable;
     private String craftableItem;
-    public inventory(TextureRegion img1, TextureRegion img2){
-        notCraftableImg =  img1;
+
+    public inventory(TextureRegion img1, TextureRegion img2) {
+        notCraftableImg = img1;
         craftableImg = img2;
         craftable = false;
         stack = new foodItems[3];
     }
 
-    public foodItems getIndex(int Index){
+    public foodItems getIndex(int Index) {
         return (foodItems) stack[Index];
     }
 
-    public boolean addItem(foodItems item){
-        if (stack[2]==null){
+    public boolean addItem(foodItems item) {
+        if (stack[2] == null) {
             stack[2] = stack[1];
             stack[1] = stack[0];
             stack[0] = item;
             return true;
-        } else if (stack[1]==null) {
+        } else if (stack[1] == null) {
             stack[1] = stack[0];
             stack[0] = item;
             return true;
-        } else if (stack[0]==null) {
+        } else if (stack[0] == null) {
             stack[0] = item;
             return true;
         }
@@ -47,7 +47,7 @@ public class inventory {
     }
 
     //removes the head of the stack and returns it
-    public foodItems returnHead(){
+    public foodItems returnHead() {
         foodItems temp = (foodItems) stack[0];
         stack[0] = stack[1];
         stack[1] = stack[2];
@@ -56,40 +56,40 @@ public class inventory {
     }
 
     //looks and returns the head of the stack, makes no change
-    public foodItems checkHead(){
+    public foodItems checkHead() {
         return stack[0];
     }
 
-    public boolean isSpace(){
-        if (stack[2] == null){return true;}
-
-        else{return false;}
+    public boolean isSpace() {
+        if (stack[2] == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void drawInventory(SpriteBatch batch, float x, float y){
+    public void drawInventory(SpriteBatch batch, float x, float y) {
         //10,100
-        if (craftable){
-            batch.draw(craftableImg,x,y);
-        }
-        else{
-            batch.draw(notCraftableImg,x,y);
+        if (craftable) {
+            batch.draw(craftableImg, x, y);
+        } else {
+            batch.draw(notCraftableImg, x, y);
         }
 
         for (int i = 0; i < stack.length; i++) {
-            if (stack[i]!= null){
-                batch.draw(stack[i].getItemSprite(),x+55,y+(i*70)+(i+1*10)+150);
+            if (stack[i] != null) {
+                batch.draw(stack[i].getItemSprite(), x + 55, y + (i * 70) + (i + 1 * 10) + 150);
             }
         }
 
     }
 
 
-
-    public void craftableCheck(){
+    public void craftableCheck() {
         craftable = false;
         Iterator<Map.Entry<String, Triplet>> recipeIterator = recipes.entrySet().iterator();
         // Iterates through the recipe list of key value pair
-        while (recipeIterator.hasNext()){
+        while (recipeIterator.hasNext()) {
             //truthList is to keep count of the number of ingredients that match the recipe
             HashSet truthList = new HashSet<>(3);
             Map.Entry<String, Triplet> ingredients = recipeIterator.next();
@@ -102,7 +102,9 @@ public class inventory {
 
                 for (int i = 0; i < stack.length; i++) {
 
-                    if (stack[i] == null){break;}
+                    if (stack[i] == null) {
+                        break;
+                    }
                     if (obj.equals(new Pair<>(stack[i].getItemName(), stack[i].getStage()))) {
 /*
                         System.out.println(obj);
@@ -118,12 +120,15 @@ public class inventory {
                     }
                 }
                 //recipes need 3 ingredients if one is missing then that is not valid recipe so check next recipe
-                if (!cont) {break;}
+                if (!cont) {
+                    break;
+                }
             }
             //checks if there is 3 ingredients which match the recipe and then variables enter a craftable state
-            if (truthList.size()==3){
+            if (truthList.size() == 3) {
                 craftableItem = ingredients.getKey();
-                craftable = true;}
+                craftable = true;
+            }
 
         }
     }
@@ -133,10 +138,10 @@ public class inventory {
     }
 
     //empties the inventory and inserts the crafted item
-    public void craft(){
-        stack[0]=null;
-        stack[1]=null;
-        stack[2]=null;
-        stack[0]= new foodItems(craftableItem);
+    public void craft() {
+        stack[0] = null;
+        stack[1] = null;
+        stack[2] = null;
+        stack[0] = new foodItems(craftableItem);
     }
 }

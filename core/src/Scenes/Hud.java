@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import javax.swing.text.View;
-import java.awt.*;
 // class creates labels in the for the Screens Credit_Screen class
 public class Hud {
+
     public Stage stage;
     private Viewport viewport;
 
@@ -26,7 +25,7 @@ public class Hud {
     Label name5;
     Label name6;
 
-    public Hud(SpriteBatch sb){
+    public Hud(SpriteBatch sb) {
         viewport = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Table table = new Table();

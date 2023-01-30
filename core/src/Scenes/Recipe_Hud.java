@@ -1,20 +1,20 @@
 package Scenes;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.customer;
-import com.mygdx.game.foodItems;
-
 import java.util.Queue;
 
 public class Recipe_Hud {
+
     public Stage stage;
     private Viewport viewport;
 
@@ -23,11 +23,12 @@ public class Recipe_Hud {
     Label Recipe2;
     Label Recipe3;
 
-    public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders){
+    public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders) {
         // creating the orders on screen
         String Burger = "Lettuce, Patty, Bun";
         String Lettuce = "Lettuce, Tomato, Onion";
-        viewport = new FitViewport(MyGame.V_WIDTH*2, MyGame.V_HEIGHT*2, new OrthographicCamera());
+        viewport = new FitViewport(MyGame.V_WIDTH * 2, MyGame.V_HEIGHT * 2,
+            new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Table table = new Table();
         table.setFillParent(true);
@@ -41,10 +42,11 @@ public class Recipe_Hud {
 
         table.add(OrdersLabel).left();
         table.row();
-        for (int i=0;i< Orders.size();i++){
+        for (int i = 0; i < Orders.size(); i++) {
             customer temp = (customer) Orders.toArray()[i];
             String name = temp.getItemName().substring(2);
-            Recipe1 = new Label((i+1)+": "+name, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+            Recipe1 = new Label((i + 1) + ": " + name,
+                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             table.add(Recipe1).left();
             table.row();
         }
@@ -58,34 +60,34 @@ public class Recipe_Hud {
 
         table.left().left();
 
-
-        table.setOrigin(0,0);
+        table.setOrigin(0, 0);
         stage.addActor(table);
 
 
+    }
 
-        }
-        // updates order list once order completed
-        public void updateHUB(Queue<customer> Orders){
-            stage.clear();
-            Table table = new Table();
-            table.setFillParent(true);
-            table.add(OrdersLabel).left();
+    // updates order list once order completed
+    public void updateHUB(Queue<customer> Orders) {
+        stage.clear();
+        Table table = new Table();
+        table.setFillParent(true);
+        table.add(OrdersLabel).left();
+        table.row();
+        for (int i = 0; i < Orders.size(); i++) {
+            customer temp = (customer) Orders.toArray()[i];
+            String name = temp.getItemName().substring(2);
+            Recipe1 = new Label((i + 1) + ": " + name,
+                new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+            table.add(Recipe1).left();
             table.row();
-            for (int i=0;i< Orders.size();i++){
-                customer temp = (customer) Orders.toArray()[i];
-                String name = temp.getItemName().substring(2);
-                Recipe1 = new Label((i+1)+": "+name, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-                table.add(Recipe1).left();
-                table.row();
-            }
-
-            table.left().left();
-
-            table.setOrigin(0,0);
-            stage.addActor(table);
-
         }
+
+        table.left().left();
+
+        table.setOrigin(0, 0);
+        stage.addActor(table);
+
+    }
 
 
 }

@@ -5,21 +5,27 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class foodItems {
+
     String itemName;
     TextureAtlas atlas;
     int stage;
 
     // instantiates a new item fetched from assets
-    public foodItems(String itemName){
+    public foodItems(String itemName) {
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
         this.itemName = itemName;
-        stage=0;
-        if (atlas.findRegion(this.itemName,stage) == null){stage=-1;}
+        stage = 0;
+        if (atlas.findRegion(this.itemName, stage) == null) {
+            stage = -1;
+        }
 
 
     }
-    public void nextStage(){
-        if (stage != 3){stage += 1;}
+
+    public void nextStage() {
+        if (stage != 3) {
+            stage += 1;
+        }
     }
 
     public void fail() {
@@ -30,9 +36,13 @@ public class foodItems {
         }
     }
 
-    public String getItemName(){return itemName;}
+    public String getItemName() {
+        return itemName;
+    }
 
-    public int getStage(){return stage;}
+    public int getStage() {
+        return stage;
+    }
 
     public TextureRegion getItemSprite() {
         //System.out.println(stage);

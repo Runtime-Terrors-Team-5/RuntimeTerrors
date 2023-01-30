@@ -5,13 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
+
 // GAME CREDITS SCREEN
 public class Credit_Screen implements Screen {
+
     private MyGame game;
 
     private Viewport game_port;
@@ -19,48 +20,53 @@ public class Credit_Screen implements Screen {
     private Hud hud;
 
 
-
-    public Credit_Screen(MyGame game){
+    public Credit_Screen(MyGame game) {
         this.game = game;
         gamecam = new OrthographicCamera();
-        game_port = new FitViewport(MyGame.V_WIDTH,MyGame.V_HEIGHT,gamecam);
+        game_port = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, gamecam);
         hud = new Hud(game.batch);
     }
+
     @Override
-    public void show(){
+    public void show() {
 
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) ) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             game.setScreen(new Menu_Screen(game));
             dispose();
         }
     }
+
     @Override
-    public void resize(int width, int height){
+    public void resize(int width, int height) {
 
         game_port.update(width, height);
 
     }
+
     @Override
-    public void pause(){
+    public void pause() {
 
     }
+
     @Override
-    public void resume(){
+    public void resume() {
 
     }
+
     @Override
-    public void hide(){
+    public void hide() {
 
     }
+
     @Override
-    public void dispose(){
+    public void dispose() {
 
     }
 }

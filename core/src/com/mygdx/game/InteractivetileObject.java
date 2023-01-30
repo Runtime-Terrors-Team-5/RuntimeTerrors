@@ -8,7 +8,12 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 
 // interface / parent class for all interactable objects on screen
@@ -26,8 +31,7 @@ public class InteractivetileObject {
     protected String[] AcceptableItems;
 
 
-
-    public InteractivetileObject(World world, TiledMap map, MapObject object){
+    public InteractivetileObject(World world, TiledMap map, MapObject object) {
         this.world = world;
         this.map = map;
         this.object = object;
@@ -38,47 +42,55 @@ public class InteractivetileObject {
         PolygonShape shape = new PolygonShape();
         bdef.type = BodyDef.BodyType.StaticBody;
         // can add / Mygame.PPM
-        bdef.position.set((float) (bounds.getX() + 50 ), (float) (bounds.getY()+50));
-        System.out.println(String.format("X:%s Y:%s",bounds.getWidth(),bounds.getHeight()));
+        bdef.position.set((float) (bounds.getX() + 50), (float) (bounds.getY() + 50));
+        System.out.println(String.format("X:%s Y:%s", bounds.getWidth(), bounds.getHeight()));
         body = world.createBody(bdef);
-        shape.setAsBox(bounds.getWidth()/2, bounds.getHeight()/2);
+        shape.setAsBox(bounds.getWidth() / 2, bounds.getHeight() / 2);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
     }
 
-    public Rectangle getRect(){
+    public Rectangle getRect() {
         return bounds;
     }
 
-    public void progress(float dt){}
+    public void progress(float dt) {
+    }
 
-    public foodItems getCurrentItem(){return currentItem;}
-    public boolean isProgressable(){
+    public foodItems getCurrentItem() {
+        return currentItem;
+    }
+
+    public boolean isProgressable() {
         return false;
     }
+
     public void DisposeTrash(Player chef) {
     }
 
-    public void drawProgress(Batch batch, OrthographicCamera cam){}
+    public void drawProgress(Batch batch, OrthographicCamera cam) {
+    }
 
     public void DispenseItem(Player player) {
     }
 
-    public boolean acceptableItem(String item){return false;}
+    public boolean acceptableItem(String item) {
+        return false;
+    }
 
-    protected void DrawProgressBar(OrthographicCamera cam, float progress){
+    protected void DrawProgressBar(OrthographicCamera cam, float progress) {
         ShapeRenderer shape = new ShapeRenderer();
         //Draws the red background
         shape.setProjectionMatrix(cam.combined);
         shape.begin(ShapeRenderer.ShapeType.Filled);
         shape.setColor(Color.RED);
-        shape.rect(bounds.getX(), bounds.getY(), 95,20);
+        shape.rect(bounds.getX(), bounds.getY(), 95, 20);
         shape.end();
         //Draws the green box progress being filled
         shape.setProjectionMatrix(cam.combined);
         shape.begin(ShapeRenderer.ShapeType.Filled);
         shape.setColor(Color.GREEN);
-        shape.rect(bounds.getX(), bounds.getY(), 95-(95*(progress/10)),20);
+        shape.rect(bounds.getX(), bounds.getY(), 95 - (95 * (progress / 10)), 20);
         shape.end();
         shape.dispose();
     }
