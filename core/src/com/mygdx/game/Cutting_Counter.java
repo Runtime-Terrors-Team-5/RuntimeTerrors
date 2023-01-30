@@ -34,7 +34,7 @@ public class Cutting_Counter extends InteractivetileObject{
         progress = 10;
     }
 
-    public void progress(float dt){
+    public void progress(float dt){ // progress bar
         progress -= dt;
         if (progress<0){
             if (currentItem.stage!=2){
@@ -53,14 +53,14 @@ public class Cutting_Counter extends InteractivetileObject{
         return false;
     }
 
-    public void drawProgress(Batch batch, OrthographicCamera cam){
+    public void drawProgress(Batch batch, OrthographicCamera cam){ // draws progress bar on screen
         DrawProgressBar(cam, progress);
 
         batch.begin();
         batch.draw(currentItem.getItemSprite(),bounds.getX(),bounds.getY());
         batch.end();
     }
-
+    // checks if item argument is in the items which can be cut
     public boolean acceptableItem(String item){
         if (Arrays.asList(AcceptableItems).contains(item)){return true;}
 
