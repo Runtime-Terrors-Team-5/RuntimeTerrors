@@ -1,21 +1,17 @@
 package Screens;
 
 import Scenes.Recipe_Hud;
-import com.mygdx.game.Service_Counter;
 import Tools.World_contact_listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -64,13 +60,15 @@ public class Play_Screen implements Screen {
     // completed game scenario boolean
     public boolean Completed_scenario;
 
+    public long timeStart;
+
 
 
 
     public Play_Screen(MyGame game, int scenarioCount){
         this.game = game;
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
-
+        timeStart = System.currentTimeMillis();
         // setting up the recipe contents in a hashmap
         recipes = new HashMap<>();
         recipes.put("E_Salad",
@@ -220,6 +218,9 @@ public class Play_Screen implements Screen {
         }
         // game  scenario over condition, changes screen to score board or menu
         if (Completed_scenario == true){
+            long timeend = System.currentTimeMillis();
+            long timeElapsed = timeend - timeStart;
+            System.out.println(timeElapsed);
             game.setScreen(new Menu_Screen(game));
             dispose();
         }
