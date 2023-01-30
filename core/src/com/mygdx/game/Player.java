@@ -25,12 +25,10 @@ public class Player {
     public Sprite sprite;
     public Sprite inventorySprite;
     public inventory inventory;
-    private boolean action;
-
     public float speed = 300; // player movement speed
-
     // rectangle for collisions
     public Rectangle Rectangle;
+    private boolean action;
 
     // methods
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world) {

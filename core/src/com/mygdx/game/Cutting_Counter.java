@@ -44,7 +44,7 @@ public class Cutting_Counter extends InteractivetileObject {
         }
     }
 
-    public boolean isProgressable() {
+    public boolean isProgressing() {
         if (progress > 0) {
             if (currentItem.stage != 2) {
                 return true;

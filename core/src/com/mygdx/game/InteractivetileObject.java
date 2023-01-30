@@ -61,7 +61,7 @@ public class InteractivetileObject {
         return currentItem;
     }
 
-    public boolean isProgressable() {
+    public boolean isProgressing() {
         return false;
     }
 
@@ -93,6 +93,10 @@ public class InteractivetileObject {
         shape.rect(bounds.getX(), bounds.getY(), 95 - (95 * (progress / 10)), 20);
         shape.end();
         shape.dispose();
+    }
+
+    public void nextStage() {
+        currentItem.nextStage();
     }
 
 

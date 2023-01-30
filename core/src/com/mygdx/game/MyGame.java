@@ -8,12 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGame extends Game {
 
+    public static final int V_WIDTH = 400;
+    public static final int V_HEIGHT = 200;
     public SpriteBatch batch; // holds all images, public so all screens can access it
     public BitmapFont font;
     Texture img;
-    public static final int V_WIDTH = 400;
-
-    public static final int V_HEIGHT = 200;
     // load the drop sound effect and the rain background "music"
     //dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
     //rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));

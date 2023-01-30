@@ -15,8 +15,6 @@ import com.mygdx.game.MyGame;
 public class Hud {
 
     public Stage stage;
-    private Viewport viewport;
-
     Label credits_label;
     Label name1;
     Label name2;
@@ -24,6 +22,7 @@ public class Hud {
     Label name4;
     Label name5;
     Label name6;
+    private Viewport viewport;
 
     public Hud(SpriteBatch sb) {
         viewport = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, new OrthographicCamera());

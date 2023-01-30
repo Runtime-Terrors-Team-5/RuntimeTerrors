@@ -9,17 +9,38 @@ public class foodItems {
     String itemName;
     TextureAtlas atlas;
     int stage;
+    private boolean isProgressable;
 
     // instantiates a new item fetched from assets
     public foodItems(String itemName) {
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
         this.itemName = itemName;
         stage = 0;
+        isProgressable = false;
         if (atlas.findRegion(this.itemName, stage) == null) {
             stage = -1;
         }
 
 
+    }
+
+    public void setProgressableTrue() {
+        isProgressable = true;
+    }
+
+    public void setProgressableFalse() {
+        isProgressable = false;
+    }
+
+    public boolean isProgressable() {
+        if (isProgressable) {
+            if (stage != 2) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        return false;
     }
 
     public void nextStage() {
@@ -28,6 +49,7 @@ public class foodItems {
         }
     }
 
+    //for testing auto turns the item to fail stage
     public void fail() {
         if (itemName == "E_Bun") { // object ingredient is unusable (burnt) if reaches a burnt stage
             stage = 2;

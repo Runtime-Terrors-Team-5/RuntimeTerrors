@@ -14,11 +14,6 @@ import com.mygdx.game.MyGame;
 
 public class Menu_Screen implements Screen {
 
-    private MyGame game;
-
-    private Viewport game_port;
-    private OrthographicCamera gamecam;
-
     Texture menu;
     Texture endlessButton;
     Texture endlessButtonSelected;
@@ -37,9 +32,11 @@ public class Menu_Screen implements Screen {
     Boolean help;
     Integer scenarioCount;
     BitmapFont font;
-
     int xMouse;
     int yMouse;
+    private MyGame game;
+    private Viewport game_port;
+    private OrthographicCamera gamecam;
 
     public Menu_Screen(MyGame game) {
         this.game = game;
@@ -130,7 +127,7 @@ public class Menu_Screen implements Screen {
 
             } else if (xMouse > 1200 & xMouse < 1320 & yMouse > 590 & yMouse < 650) {
                 game.batch.draw(scenarioCounterDown, 1200, 340, 120, 240);
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) & scenarioCount > 5) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) & scenarioCount > 1) {
                     scenarioCount -= 1;
                 }
             } else {

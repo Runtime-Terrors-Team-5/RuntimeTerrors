@@ -16,12 +16,11 @@ import java.util.Queue;
 public class Recipe_Hud {
 
     public Stage stage;
-    private Viewport viewport;
-
     Label OrdersLabel;
     Label Recipe1;
     Label Recipe2;
     Label Recipe3;
+    private Viewport viewport;
 
     public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders) {
         // creating the orders on screen

@@ -57,13 +57,6 @@ public class Play_Screen implements Screen {
     public static int chefPointer;
     public static HashSet<InteractivetileObject> activeStations;
     public static HashMap recipes; // recipe items, can be used for random order generation
-    // orders queue to be popped
-    //public Queue<String> Orders = new LinkedList<>();
-    public Queue<customer> Orders = new LinkedList<>();
-    // completed game scenario boolean
-    public boolean Completed_scenario;
-    public long timeStart;
-    TextureAtlas atlas;
     private final MyGame game;
     // sets screen size
     private final Viewport game_port;
@@ -77,6 +70,13 @@ public class Play_Screen implements Screen {
     private final Box2DDebugRenderer b2dr;
     // display orders
     private final Recipe_Hud hud;
+    // orders queue to be popped
+    //public Queue<String> Orders = new LinkedList<>();
+    public Queue<customer> Orders = new LinkedList<>();
+    // completed game scenario boolean
+    public boolean Completed_scenario;
+    public long timeStart;
+    TextureAtlas atlas;
 
 
     public Play_Screen(MyGame game, int scenarioCount) {
@@ -241,7 +241,7 @@ public class Play_Screen implements Screen {
             long timeend = System.currentTimeMillis();
             long timeElapsed = timeend - timeStart;
             System.out.println(timeElapsed);
-            game.setScreen(new Menu_Screen(game));
+            game.setScreen(new Result_screen(game, timeElapsed));
             dispose();
         }
 
@@ -269,7 +269,7 @@ public class Play_Screen implements Screen {
         handleInput(dt);
         for (InteractivetileObject obj :
             activeStations) {
-            if (obj.isProgressable()) {
+            if (obj.isProgressing()) {
                 obj.progress(dt);
             }
         }
@@ -327,13 +327,10 @@ public class Play_Screen implements Screen {
                             if (temp.getClass().equals(Bin.class)) {
                                 temp.DisposeTrash(chefSelection[chefPointer]);
                             } else if (temp.getClass().equals(Onion_dispenser.class)) {
-                                System.out.println("onion");
                                 temp.DispenseItem(chefSelection[chefPointer]);
                             } else if (temp.getClass().equals(Patty_dispenser.class)) {
-                                System.out.println("patty");
                                 temp.DispenseItem(chefSelection[chefPointer]);
                             } else if (temp.getClass().equals(Bun_dispenser.class)) {
-                                System.out.println("bun");
                                 temp.DispenseItem(chefSelection[chefPointer]);
                             } else if (temp.getClass().equals(Tomato_dispenser.class)) {
                                 temp.DispenseItem(chefSelection[chefPointer]);
@@ -366,8 +363,13 @@ public class Play_Screen implements Screen {
                                         chefSelection[chefPointer].setActionTrue();
                                     }
                                 } else {
-                                    ((Cooking_station) temp).removeItem(chefSelection[chefPointer]);
-                                    chefSelection[chefPointer].setActionFalse();
+                                    if (temp.getCurrentItem().isProgressable()) {
+                                        temp.nextStage();
+                                    } else {
+                                        ((Cooking_station) temp).removeItem(
+                                            chefSelection[chefPointer]);
+                                        chefSelection[chefPointer].setActionFalse();
+                                    }
                                 }
                             } else if (temp.getClass().equals(Counters.class)) {
                                 if (temp.getCurrentItem() == null) {

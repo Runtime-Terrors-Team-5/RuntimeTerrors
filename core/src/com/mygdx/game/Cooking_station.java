@@ -36,15 +36,23 @@ public class Cooking_station extends InteractivetileObject {
 
     public void progress(float dt) {
         progress -= dt;
-        if (progress < 0) {
-            if (currentItem.stage != 2) {
-                currentItem.nextStage();
-                progress = 10;
-            }
+        if (progress > 0) {
+            currentItem.setProgressableFalse();
+        } else {
+            currentItem.setProgressableTrue();
         }
     }
 
-    public boolean isProgressable() {
+    @Override
+    public void nextStage() {
+        if (currentItem.isProgressable()) {
+
+            currentItem.nextStage();
+            progress = 10;
+        }
+    }
+
+    public boolean isProgressing() {
         if (progress > 0) {
             return currentItem.stage != 2;
         }
