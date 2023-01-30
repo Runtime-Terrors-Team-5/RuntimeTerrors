@@ -278,7 +278,7 @@ public class Play_Screen implements Screen {
             for (Body b:bodies){
 
                 if (sqrt(pow(b.getPosition().x-chefSelection[chefPointer].position.x,2) +
-                        pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 100){
+                        pow(b.getPosition().y-chefSelection[chefPointer].position.y,2)) < 200){
                     if (b.getFixtureList().get(0).getUserData() == null){continue;}
                     if (b.getFixtureList().get(0).getUserData().getClass().equals(Player.class)){continue;}
 
