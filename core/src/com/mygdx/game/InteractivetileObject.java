@@ -10,8 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
-
-// interface / parent class for all interactable objects on screen
 public class InteractivetileObject {
 
     private final MapObject object;
@@ -32,7 +30,7 @@ public class InteractivetileObject {
         this.map = map;
         this.object = object;
         this.bounds = ((RectangleMapObject) object).getRectangle();
-        // instantiates object on map
+
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();

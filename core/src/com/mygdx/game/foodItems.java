@@ -8,8 +8,6 @@ public class foodItems {
     String itemName;
     TextureAtlas atlas;
     int stage;
-
-    // instantiates a new item fetched from assets
     public foodItems(String itemName){
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
         this.itemName = itemName;
@@ -23,7 +21,7 @@ public class foodItems {
     }
 
     public void fail() {
-        if (itemName == "E_Bun") { // object ingredient is unusable (burnt) if reaches a burnt stage
+        if (itemName == "E_Bun") {
             stage = 2;
         } else {
             stage = 3;

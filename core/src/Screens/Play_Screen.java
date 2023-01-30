@@ -40,7 +40,7 @@ public class Play_Screen implements Screen {
     public static int chefPointer;
 
     public static HashSet<InteractivetileObject> activeStations;
-    public static HashMap recipes; // recipe items, can be used for random order generation
+    public static HashMap recipes;
     // sets screen size
     private Viewport game_port;
     private OrthographicCamera gamecam;
@@ -71,7 +71,6 @@ public class Play_Screen implements Screen {
         this.game = game;
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
 
-        // setting up the recipe contents in a hashmap
         recipes = new HashMap<>();
         recipes.put("E_Salad",
                 new Triplet<>(new Pair<>("E_Lettuce", 2), new Pair<>("E_Tomato", 2), new Pair<>("E_Onion", 2)));
@@ -194,7 +193,7 @@ public class Play_Screen implements Screen {
     @Override
     public void render (float delta) {
         update(delta);
-        ScreenUtils.clear(1, 1, 1, 1); // background colour
+        ScreenUtils.clear(1, 1, 1, 1);
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
         //game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -214,7 +213,7 @@ public class Play_Screen implements Screen {
             game.batch.draw(temp.getSprite(),1000+(i*100),720);
         }
 
-        // draws chefs
+
         for (Player chefs: chefSelection) {
             chefs.Draw(game.batch);
         }
@@ -225,7 +224,7 @@ public class Play_Screen implements Screen {
         }
 
         game.batch.end();
-        // draws stations
+
         for (InteractivetileObject obj : activeStations) {
                 obj.drawProgress(game.batch, gamecam);
         }
@@ -234,14 +233,13 @@ public class Play_Screen implements Screen {
 
 
     }
-    // resizes game screen
     @Override
     public void resize(int width, int height){
         game_port.update(width, height);
         gamecam.setToOrtho(false, width, height);
 
     }
-    // updates screen with new changes
+    // handles inputs
     public void update(float dt){
         handleInput(dt);
         for (InteractivetileObject obj :
@@ -250,7 +248,7 @@ public class Play_Screen implements Screen {
                 obj.progress(dt);
             }
         }
-        // game cam follows player movement
+
         gamecam.position.x = chefSelection[chefPointer].position.x;
         gamecam.position.y = chefSelection[chefPointer].position.y;
         gamecam.update();
@@ -261,7 +259,6 @@ public class Play_Screen implements Screen {
         if(Gdx.input.isTouched()) {
             gamecam.position.y += 100 * dt;
         }
-        // changes chef selection
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             chefPointer += 1;
             if (chefPointer>chefSelection.length-1){chefPointer=0;}
@@ -271,7 +268,7 @@ public class Play_Screen implements Screen {
             System.out.print(" ");
             System.out.println(Gdx.input.getY());
         }
-        // identifies player & object collisions and their specific actions. Then handles the input
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
@@ -288,7 +285,7 @@ public class Play_Screen implements Screen {
 
                     if (temp.getRect().getX() < mouse.x & mouse.x < temp.getRect().getX() + temp.getRect().getWidth()){
                     if (temp.getRect().getY() < mouse.y & mouse.y < temp.getRect().getY() + temp.getRect().getHeight()){
-                    // identifies collided object
+
                     if (temp.getClass().equals(Bin.class)) {
                         temp.DisposeTrash(chefSelection[chefPointer]);
                     }
@@ -344,19 +341,18 @@ public class Play_Screen implements Screen {
                         }
                         else{((Counters) temp).removeItem(chefSelection[chefPointer]);}
                     }
-
+                    // classification of what the order made's type to be classed later
                     // Scenario ending condition , and calculating if orders are right
                     else if (temp.getClass().equals(Service_Counter.class)) {
                         if(chefSelection[chefPointer].inventory.checkHead()==null){continue;}
-                        if(Orders.isEmpty()){Completed_scenario = true;}
+                        if(Orders.isEmpty()){Completed_scenario = true;}   // pops the list if true and orders not empty
 
                         else if (((Service_Counter) temp).CheckOrders(chefSelection[chefPointer].inventory.checkHead() , this.Orders)){
                             this.Orders.remove();
                             chefSelection[chefPointer].inventory.returnHead();
                             hud.updateHUB(Orders);
-                            // checks to see if its now empty after removal, automatically ending the game if so
                             if(Orders.isEmpty()){Completed_scenario = true;}
-
+                            // checks to see if its now empty after removal, automatically ending the game
 
                         }
 
@@ -366,7 +362,7 @@ public class Play_Screen implements Screen {
                 }
             }
         }
-        // checks if items are craftable
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.C)){
             if (chefSelection[chefPointer].inventory.isCraftable()){
                 chefSelection[chefPointer].inventory.craft();

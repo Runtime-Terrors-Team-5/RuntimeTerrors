@@ -12,7 +12,7 @@ public class Service_Counter extends InteractivetileObject{
         fixture.setUserData(this);
 
     }
-    // checks if order(argument) is matching / correct
+
     public boolean CheckOrders(foodItems Food, Queue<customer> Orders){
         if (Orders.peek().getItemName().equals(Food.getItemName())){return true;}
         else {return false;}

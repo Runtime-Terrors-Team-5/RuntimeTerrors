@@ -24,7 +24,6 @@ public class Recipe_Hud {
     Label Recipe3;
 
     public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders){
-        // creating the orders on screen
         String Burger = "Lettuce, Patty, Bun";
         String Lettuce = "Lettuce, Tomato, Onion";
         viewport = new FitViewport(MyGame.V_WIDTH*2, MyGame.V_HEIGHT*2, new OrthographicCamera());
@@ -65,7 +64,7 @@ public class Recipe_Hud {
 
 
         }
-        // updates order list once order completed
+
         public void updateHUB(Queue<customer> Orders){
             stage.clear();
             Table table = new Table();

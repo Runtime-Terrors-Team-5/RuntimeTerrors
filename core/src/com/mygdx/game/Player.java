@@ -36,13 +36,13 @@ public class Player {
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
         action = false;
         sprite = new Sprite(img);
-        inventory = new inventory(img2, img3);  // creates player inventory sprite
+        inventory = new inventory(img2, img3);
         inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
         this.world = world;
 
-        BodyDef bdef = new BodyDef();   // creates player object
+        BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
         Body b2body = world.createBody(bdef);
@@ -83,7 +83,7 @@ public class Player {
                 if (Gdx.input.isKeyPressed(Keys.D)) {position.x += 0.2;}
                 if (Gdx.input.isKeyPressed(Keys.S)) {position.y -= 0.2;}
                 if (Gdx.input.isKeyPressed(Keys.W)) {position.y += 0.2;}
-            }  // if player collides with objects it blocks further movement
+            }
             else{
                 if (position.x - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.x)<= 0){position.x -= 5;}
                 if (position.y - (((InteractivetileObject) b.getFixtureList().get(0).getUserData()).bounds.y)<= 0){position.y -= 5;}
