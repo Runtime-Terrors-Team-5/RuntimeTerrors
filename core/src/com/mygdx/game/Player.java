@@ -25,6 +25,7 @@ public class Player {
     public Sprite sprite;
     public Sprite inventorySprite;
     public inventory inventory;
+    private boolean action;
 
     public float speed = 300; // player movement speed
 
@@ -33,6 +34,7 @@ public class Player {
 
     // methods
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
+        action = false;
         sprite = new Sprite(img);
         inventory = new inventory(img2, img3);
         inventorySprite = new Sprite(img2);
@@ -75,7 +77,7 @@ public class Player {
             if(Play_Screen.chefSelection[Play_Screen.chefPointer]!=this){continue;}
 
             if (!Intersector.overlaps(temp.getRect(), Rectangle)) {
-
+                if (action){continue;}
                    // player movement input
                 if (Gdx.input.isKeyPressed(Keys.A)) {position.x -= 0.2;}
                 if (Gdx.input.isKeyPressed(Keys.D)) {position.x += 0.2;}
@@ -110,4 +112,8 @@ public class Player {
     public com.badlogic.gdx.math.Rectangle getRectangle() {
         return this.Rectangle;
     }
+
+    public void setActionTrue(){action=true;}
+
+    public void setActionFalse(){action=false;}
 }

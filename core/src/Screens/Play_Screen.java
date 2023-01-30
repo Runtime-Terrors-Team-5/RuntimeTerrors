@@ -67,7 +67,7 @@ public class Play_Screen implements Screen {
 
 
 
-    public Play_Screen(MyGame game){
+    public Play_Screen(MyGame game, int scenarioCount){
         this.game = game;
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
 
@@ -79,7 +79,7 @@ public class Play_Screen implements Screen {
                 new Triplet<>(new Pair<>("E_Lettuce", 2), new Pair<>("E_Patty", 2), new Pair<>("E_Bun", 1)));
         // sets up adding the orders to be made in the scenario
         Set recipeItems = recipes.keySet();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < scenarioCount; i++) {
             String temp = (String) recipeItems.toArray()[ThreadLocalRandom.current().nextInt(0,recipeItems.size())];
             Orders.add(new customer(new foodItems(temp),atlas));
         }
@@ -314,9 +314,11 @@ public class Play_Screen implements Screen {
                             if (tempItem==null){continue;}
                             if (temp.acceptableItem(tempItem.getItemName())) {
                                 ((Cutting_Counter) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                                chefSelection[chefPointer].setActionTrue();
                             }
                         }
-                        else{((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);}
+                        else{((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);
+                            chefSelection[chefPointer].setActionFalse();}
                     }
 
                     else if (temp.getClass().equals(Cooking_station.class)) {
@@ -325,14 +327,17 @@ public class Play_Screen implements Screen {
                             if (tempItem==null){continue;}
                             if (temp.acceptableItem(tempItem.getItemName())) {
                                 ((Cooking_station) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+                                chefSelection[chefPointer].setActionTrue();
                             }
                         }
-                        else{((Cooking_station) temp).removeItem(chefSelection[chefPointer]);}
+                        else{((Cooking_station) temp).removeItem(chefSelection[chefPointer]);
+                            chefSelection[chefPointer].setActionFalse();}
                     }
 
                     else if (temp.getClass().equals(Counters.class)) {
                         if (temp.getCurrentItem()==null){
                             ((Counters) temp).takeItem(chefSelection[chefPointer].inventory.returnHead());
+
                         }
                         else{((Counters) temp).removeItem(chefSelection[chefPointer]);}
                     }

@@ -92,7 +92,7 @@ public class Menu_Screen implements Screen {
             if (xMouse > 800 & xMouse < 1190 & yMouse > 485 & yMouse < 595){
                 game.batch.draw(scenarioButtonSelected,800,400,390,115);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new Play_Screen(game));
+                    game.setScreen(new Play_Screen(game, scenarioCount));
                     dispose();
                 }
             }
@@ -105,7 +105,7 @@ public class Menu_Screen implements Screen {
             if(xMouse > 800 & xMouse < 1190 & yMouse > 630 & yMouse < 740){
                 game.batch.draw(endlessButtonSelected,800,250,390,115);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new Play_Screen(game));
+                    game.setScreen(new Play_Screen(game, scenarioCount));
                     dispose();
                 }
             }
