@@ -53,6 +53,9 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * Creates the game scenario screen and instatiates all the objects in the game
+ */
 public class Play_Screen implements Screen {
 
     public static Player[] chefSelection;
@@ -89,7 +92,11 @@ public class Play_Screen implements Screen {
     Sound soundFry =  Gdx.audio.newSound(Gdx.files.internal("sounds/Frying.mp3"));
     long frying = soundFry.play(0.5f);
 
-
+    /**
+     * Instantiates the Play_screen class
+     * @param game
+     * @param scenarioCount
+     */
 
     public Play_Screen(MyGame game, int scenarioCount) {
         this.game = game;
@@ -218,6 +225,10 @@ public class Play_Screen implements Screen {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public World getWorld() {
         return world;
     }
@@ -227,6 +238,10 @@ public class Play_Screen implements Screen {
     public void show() {
     }
 
+    /**
+     *
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -284,6 +299,12 @@ public class Play_Screen implements Screen {
     }
 
     // resizes game screen
+
+    /**
+     * Adjusts game screen to new window size
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         game_port.update(width, height);
@@ -291,6 +312,10 @@ public class Play_Screen implements Screen {
 
     }
 
+    /**
+     * Updates the game screen so it registers changes
+     * @param dt
+     */
     // updates screen with new changes
     public void update(float dt) {
         handleInput(dt);
@@ -307,6 +332,10 @@ public class Play_Screen implements Screen {
         renderer.setView(gamecam);
     }
 
+    /**
+     * Handles game user input
+     * @param dt
+     */
     public void handleInput(float dt) {
         if (Gdx.input.isTouched()) {
             gamecam.position.y += 100 * dt;

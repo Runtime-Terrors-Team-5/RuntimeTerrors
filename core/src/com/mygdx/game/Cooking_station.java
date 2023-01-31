@@ -8,10 +8,19 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import java.util.Arrays;
 
+/**
+ * handles cooking station interactions
+ */
 public class Cooking_station extends InteractivetileObject {
 
     private float progress;
 
+    /**
+     * instantates the cooking stations
+     * @param world
+     * @param map
+     * @param object
+     */
     public Cooking_station(World world, TiledMap map, MapObject object) {
         super(world, map, object);
         fixture.setUserData(this);
@@ -19,6 +28,10 @@ public class Cooking_station extends InteractivetileObject {
         progress = 10;
     }
 
+    /**
+     * takes item from chef and adds to station
+     * @param item
+     */
     public void takeItem(foodItems item) {
         if (item != null) {
             currentItem = item;
@@ -27,6 +40,10 @@ public class Cooking_station extends InteractivetileObject {
         }
     }
 
+    /**
+     * removes item from station and adds to chef stack
+     * @param chef
+     */
     public void removeItem(Player chef) {
         chef.inventory.addItem(currentItem);
         Play_Screen.activeStations.remove(this);
@@ -34,6 +51,10 @@ public class Cooking_station extends InteractivetileObject {
         progress = 10;
     }
 
+    /**
+     * decides if item is progressable
+     * @param dt
+     */
     public void progress(float dt) {
         progress -= dt;
         if (progress > 0) {
@@ -43,6 +64,9 @@ public class Cooking_station extends InteractivetileObject {
         }
     }
 
+    /**
+     * adds progess to current items
+     */
     @Override
     public void nextStage() {
         if (currentItem.isProgressable()) {
@@ -52,6 +76,10 @@ public class Cooking_station extends InteractivetileObject {
         }
     }
 
+    /**
+     * checks if item is progressing to another stage
+     * @return boolean or item progress
+     */
     public boolean isProgressing() {
         if (progress > 0) {
             return currentItem.stage != 2;
@@ -59,6 +87,11 @@ public class Cooking_station extends InteractivetileObject {
         return false;
     }
 
+    /**
+     *  draws cooking progress and object
+     * @param batch sprites
+     * @param cam game camera
+     */
     public void drawProgress(Batch batch, OrthographicCamera cam) {
         DrawProgressBar(cam, progress);
 
@@ -67,6 +100,11 @@ public class Cooking_station extends InteractivetileObject {
         batch.end();
     }
 
+    /**
+     * checks if the item given can be cooked
+     * @param item
+     * @return same item if it's in the array
+     */
     public boolean acceptableItem(String item) {
         return Arrays.asList(AcceptableItems).contains(item);
     }

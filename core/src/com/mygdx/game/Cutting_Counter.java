@@ -8,10 +8,19 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import java.util.Arrays;
 
+/**
+ * handles cutting counter methods and interactions
+ */
 public class Cutting_Counter extends InteractivetileObject {
 
     private float progress;
 
+    /**
+     * instantiates counter
+     * @param world
+     * @param map
+     * @param object
+     */
     public Cutting_Counter(World world, TiledMap map, MapObject object) {
         super(world, map, object);
         fixture.setUserData(this);
@@ -19,6 +28,10 @@ public class Cutting_Counter extends InteractivetileObject {
         progress = 10;
     }
 
+    /**
+     * takes item from chef
+     * @param item
+     */
     public void takeItem(foodItems item) {
         if (item != null) {
             currentItem = item;
@@ -27,6 +40,10 @@ public class Cutting_Counter extends InteractivetileObject {
         }
     }
 
+    /**
+     *adds item to chef stack, removes item from station
+     * @param chef
+     */
     public void removeItem(Player chef) {
         chef.inventory.addItem(currentItem);
         Play_Screen.activeStations.remove(this);
@@ -34,7 +51,11 @@ public class Cutting_Counter extends InteractivetileObject {
         progress = 10;
     }
 
-    public void progress(float dt) { // progress bar
+    /**
+     *progress bar
+     * @param dt
+     */
+    public void progress(float dt) { 
         progress -= dt;
         if (progress < 0) {
             if (currentItem.stage != 2) {
@@ -44,6 +65,10 @@ public class Cutting_Counter extends InteractivetileObject {
         }
     }
 
+    /**
+     * checks if item is progressing
+     * @return boolean
+     */
     public boolean isProgressing() {
         if (progress > 0) {
             if (currentItem.stage != 2) {
@@ -53,6 +78,11 @@ public class Cutting_Counter extends InteractivetileObject {
         return false;
     }
 
+    /**
+     * draws progress bar eg renders
+     * @param batch
+     * @param cam
+     */
     public void drawProgress(Batch batch, OrthographicCamera cam) { // draws progress bar on screen
         DrawProgressBar(cam, progress);
 
@@ -61,7 +91,12 @@ public class Cutting_Counter extends InteractivetileObject {
         batch.end();
     }
 
-    // checks if item argument is in the items which can be cut
+    /**
+     * checks if item argument is in the items which can be cut
+     * @param item
+     * @return boolean
+     */
+
     public boolean acceptableItem(String item) {
         if (Arrays.asList(AcceptableItems).contains(item)) {
             return true;

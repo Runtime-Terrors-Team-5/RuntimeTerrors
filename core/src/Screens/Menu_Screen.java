@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 
+/**
+ * Creates the menu interactable screen for the user
+ */
 public class Menu_Screen implements Screen {
 
     Texture menu;
@@ -38,6 +41,10 @@ public class Menu_Screen implements Screen {
     private Viewport game_port;
     private OrthographicCamera gamecam;
 
+    /**
+     * gets passed game instantiation, instantiates all the buttons and objects for the menu screen
+     * @param game
+     */
     public Menu_Screen(MyGame game) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -70,6 +77,10 @@ public class Menu_Screen implements Screen {
 
     }
 
+    /**
+     * renders the menu screen and all the assets on screen
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);

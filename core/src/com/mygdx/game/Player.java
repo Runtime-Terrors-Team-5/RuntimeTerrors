@@ -14,7 +14,9 @@ import com.badlogic.gdx.utils.Array;
 
 import static java.lang.Math.round;
 
-
+/**
+ *handles player attributes and methods (actions)
+ */
 public class Player {
     private final World world;
     // attributes
@@ -30,7 +32,13 @@ public class Player {
     public Rectangle Rectangle;
     public boolean overlap;
 
-
+    /**
+     * instantiates chef, inventory , position and its world
+     * @param img actual character chef
+     * @param img2 inventory
+     * @param img3 position
+     * @param world game world
+     */
     // methods
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
         action = false;
@@ -55,7 +63,11 @@ public class Player {
         this.Rectangle = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-    // maps keys to actions
+    /**
+     * maps keys to actions and object collision
+     * @param deltaTime game time
+     */
+
     public void Update(float deltaTime)                                                                                              {
         //runs a check to see if any recipes are craftable
         inventory.craftableCheck();
@@ -127,13 +139,17 @@ public class Player {
         }
     }
 
+    /**
+     * Draws chefs and relates sprites
+     * @param batch sprites
+     */
     public void Draw(SpriteBatch batch){
         Update(Gdx.graphics.getDeltaTime());
         sprite.setPosition(position.x, position.y);
 
         sprite.setSize(50,50);
 
-        //inventorySprite.setPosition(, );
+        // inventorySprite.setPosition(, );
         if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){
             inventory.drawInventory(batch,position.x+300,position.y);
         }
@@ -142,11 +158,21 @@ public class Player {
 
     }
 
+    /**
+     *
+     * @return Rectangle
+     */
     public com.badlogic.gdx.math.Rectangle getRectangle() {
         return this.Rectangle;
     }
 
+    /**
+     * sets action to true (boolean) , which stops chef movement
+     */
     public void setActionTrue(){action=true;}
 
+    /**
+     *sets action to false (boolean) , which stops chef movement
+     */
     public void setActionFalse(){action=false;}
 }

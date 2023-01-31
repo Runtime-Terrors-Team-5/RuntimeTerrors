@@ -10,7 +10,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 
-// GAME CREDITS SCREEN
+/**
+ * GAME CREDITS SCREEN
+ */
+
 public class Credit_Screen implements Screen {
 
     private MyGame game;
@@ -19,7 +22,10 @@ public class Credit_Screen implements Screen {
     private OrthographicCamera gamecam;
     private Hud hud;
 
-
+    /**
+     * constuctor for game screen
+     * @param game
+     */
     public Credit_Screen(MyGame game) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -32,6 +38,10 @@ public class Credit_Screen implements Screen {
 
     }
 
+    /**
+     * renders screen contents
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
@@ -43,6 +53,11 @@ public class Credit_Screen implements Screen {
         }
     }
 
+    /**
+     * resizes window
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
 

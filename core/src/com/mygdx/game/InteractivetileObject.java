@@ -15,8 +15,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ *  interface / parent class for all interactable objects on screen
+ */
 
-// interface / parent class for all interactable objects on screen
 public class InteractivetileObject {
 
     private final MapObject object;
@@ -30,7 +32,12 @@ public class InteractivetileObject {
 
     protected String[] AcceptableItems;
 
-
+    /**
+     *  base blue print for interactable objects
+     * @param world
+     * @param map
+     * @param object
+     */
     public InteractivetileObject(World world, TiledMap map, MapObject object) {
         this.world = world;
         this.map = map;
@@ -50,34 +57,73 @@ public class InteractivetileObject {
         fixture = body.createFixture(fdef);
     }
 
+    /**
+     *
+     * @return bounds
+     */
     public Rectangle getRect() {
         return bounds;
     }
 
+    /**
+     * progress method
+     * @param dt
+     */
     public void progress(float dt) {
     }
 
+    /**
+     *
+     * @return
+     */
     public foodItems getCurrentItem() {
         return currentItem;
     }
 
+    /**
+     * if item is progressing
+     * @return
+     */
     public boolean isProgressing() {
         return false;
     }
 
+    /**
+     * disposes stack head
+     * @param chef
+     */
     public void DisposeTrash(Player chef) {
     }
 
+    /**
+     *
+     * @param batch
+     * @param cam
+     */
     public void drawProgress(Batch batch, OrthographicCamera cam) {
     }
 
+    /**
+     *
+     * @param player
+     */
     public void DispenseItem(Player player) {
     }
 
+    /**
+     *
+     * @param item
+     * @return boolean
+     */
     public boolean acceptableItem(String item) {
         return false;
     }
 
+    /**
+     * draws the progress bar , sets its object shape, color and attributes
+     * @param cam game cam for object
+     * @param progress amount of progress
+     */
     protected void DrawProgressBar(OrthographicCamera cam, float progress) {
         ShapeRenderer shape = new ShapeRenderer();
         //Draws the red background
@@ -95,6 +141,9 @@ public class InteractivetileObject {
         shape.dispose();
     }
 
+    /**
+     *
+     */
     public void nextStage() {
         currentItem.nextStage();
     }

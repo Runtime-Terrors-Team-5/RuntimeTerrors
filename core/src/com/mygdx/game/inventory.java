@@ -10,6 +10,9 @@ import java.util.Map;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
+/**
+ * handles user inventory interactions and updates shown on play screen
+ */
 public class inventory {
 
     public foodItems[] stack;
@@ -18,6 +21,11 @@ public class inventory {
     private boolean craftable;
     private String craftableItem;
 
+    /**
+     *  instantates class
+     * @param img1
+     * @param img2
+     */
     public inventory(TextureRegion img1, TextureRegion img2) {
         notCraftableImg = img1;
         craftableImg = img2;
@@ -25,10 +33,20 @@ public class inventory {
         stack = new foodItems[3];
     }
 
+    /**
+     * returns an items index
+     * @param Index
+     * @return  item at that index
+     */
     public foodItems getIndex(int Index) {
         return (foodItems) stack[Index];
     }
 
+    /**
+     * adds item to stack
+     * @param item
+     * @return boolean
+     */
     public boolean addItem(foodItems item) {
         if (stack[2] == null) {
             stack[2] = stack[1];
@@ -46,7 +64,10 @@ public class inventory {
         return false;
     }
 
-    //removes the head of the stack and returns it
+    /**
+     * removes the head of the stack and returns it
+     * @return stack head
+     */
     public foodItems returnHead() {
         foodItems temp = (foodItems) stack[0];
         stack[0] = stack[1];
@@ -55,11 +76,18 @@ public class inventory {
         return temp;
     }
 
-    //looks and returns the head of the stack, makes no change
+    /**
+     * looks and returns the head of the stack, makes no change
+     * @return stack head
+     */
     public foodItems checkHead() {
         return stack[0];
     }
 
+    /**
+     * checks if there's room in the inventory
+     * @return boolean
+     */
     public boolean isSpace() {
         if (stack[2] == null) {
             return true;
@@ -68,6 +96,12 @@ public class inventory {
         }
     }
 
+    /**
+     * renders inventory
+     * @param batch sprites
+     * @param x position
+     * @param y postion
+     */
     public void drawInventory(SpriteBatch batch, float x, float y) {
         //10,100
         if (craftable) {
@@ -84,7 +118,9 @@ public class inventory {
 
     }
 
-
+    /**
+     * checks if items in stack can be crafted into a meal item
+     */
     public void craftableCheck() {
         craftable = false;
         Iterator<Map.Entry<String, Triplet>> recipeIterator = recipes.entrySet().iterator();
@@ -133,11 +169,17 @@ public class inventory {
         }
     }
 
+    /**
+     *
+     * @return craftable item
+     */
     public boolean isCraftable() {
         return craftable;
     }
 
-    //empties the inventory and inserts the crafted item
+    /**
+     * empties the inventory and inserts the crafted item
+     */
     public void craft() {
         stack[0] = null;
         stack[1] = null;

@@ -13,6 +13,9 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.customer;
 import java.util.Queue;
 
+/**
+ * Displays the customer orders on screen
+ */
 public class Recipe_Hud {
 
     public Stage stage;
@@ -22,6 +25,11 @@ public class Recipe_Hud {
     Label Recipe3;
     private Viewport viewport;
 
+    /**
+     *
+     * @param sb Sprite for the orders
+     * @param Orders Generates customer orders
+     */
     public Recipe_Hud(SpriteBatch sb, Queue<customer> Orders) {
         // creating the orders on screen
         String Burger = "Lettuce, Patty, Bun";
@@ -65,6 +73,10 @@ public class Recipe_Hud {
 
     }
 
+    /**
+     *  Updates the orders on screen once one is completed
+     * @param Orders
+     */
     // updates order list once order completed
     public void updateHUB(Queue<customer> Orders) {
         stage.clear();

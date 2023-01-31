@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 
+/**
+ * Displays the results screen, time taken to complete the game
+ */
 // GAME CREDITS SCREEN
 public class Result_screen implements Screen {
 
@@ -25,7 +28,11 @@ public class Result_screen implements Screen {
     private Hud hud;
     private Stage stage;
 
-
+    /**
+     *
+     * @param game MyGame class instatiation
+     * @param time
+     */
     public Result_screen(MyGame game, long time) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -46,11 +53,16 @@ public class Result_screen implements Screen {
         stage.addActor(table);
     }
 
+
     @Override
     public void show() {
 
     }
 
+    /**
+     *
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
@@ -62,6 +74,11 @@ public class Result_screen implements Screen {
         }
     }
 
+    /**
+     *
+     * @param width screen window width
+     * @param height  screen window height
+     */
     @Override
     public void resize(int width, int height) {
 

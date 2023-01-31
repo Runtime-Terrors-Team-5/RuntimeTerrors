@@ -11,7 +11,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGame;
 
-// class creates labels in the for the Screens Credit_Screen class
+/**
+ * class creates labels in the for the Screens Credit_Screen class
+ */
 public class Hud {
 
     public Stage stage;
@@ -24,6 +26,10 @@ public class Hud {
     Label name6;
     private Viewport viewport;
 
+    /**
+     * instantiates the Hud for the Credit screen
+     * @param sb
+     */
     public Hud(SpriteBatch sb) {
         viewport = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
