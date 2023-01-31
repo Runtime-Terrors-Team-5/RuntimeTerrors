@@ -107,6 +107,9 @@ public class Player {
             if (Play_Screen.chefSelection[Play_Screen.chefPointer] != this) {
                 continue;
             }
+            if (action) {
+                continue;
+            }
             if(overlap == false) {
                 if (Gdx.input.isKeyPressed(Keys.A)) {
                     position.x -= speed * Gdx.graphics.getDeltaTime();
