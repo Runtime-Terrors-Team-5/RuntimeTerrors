@@ -8,6 +8,7 @@ import Tools.World_contact_listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -82,10 +83,18 @@ public class Play_Screen implements Screen {
     Texture controlHelp;
     Texture ingredientsHelp;
     boolean helpScreen;
+    Sound soundChop = Gdx.audio.newSound(Gdx.files.internal("sounds/Chopping.mp3"));
+    long chopping = soundChop.play(0.5f);
+
+    Sound soundFry =  Gdx.audio.newSound(Gdx.files.internal("sounds/Frying.mp3"));
+    long frying = soundFry.play(0.5f);
+
 
 
     public Play_Screen(MyGame game, int scenarioCount) {
         this.game = game;
+        soundChop.stop(chopping);
+        soundFry.stop(frying);
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
         helpIcon = new Texture("helpIcon.png");
         controlHelp = new Texture("ControlHelp.png");
@@ -371,10 +380,13 @@ public class Play_Screen implements Screen {
                                         ((Cutting_Counter) temp).takeItem(
                                             chefSelection[chefPointer].inventory.returnHead());
                                         chefSelection[chefPointer].setActionTrue();
+                                        chopping = soundChop.play(0.5f);
+                                        soundChop.setLooping(chopping, true);
                                     }
                                 } else {
                                     ((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);
                                     chefSelection[chefPointer].setActionFalse();
+                                    soundChop.stop(chopping);
                                 }
                             } else if (temp.getClass().equals(Cooking_station.class)) {
                                 if (temp.getCurrentItem() == null) {
@@ -386,6 +398,8 @@ public class Play_Screen implements Screen {
                                         ((Cooking_station) temp).takeItem(
                                             chefSelection[chefPointer].inventory.returnHead());
                                         chefSelection[chefPointer].setActionTrue();
+                                        frying = soundFry.play(0.5f);
+                                        soundFry.setLooping(frying, true);
                                     }
                                 } else {
                                     if (temp.getCurrentItem().isProgressable()) {
@@ -394,6 +408,7 @@ public class Play_Screen implements Screen {
                                         ((Cooking_station) temp).removeItem(
                                             chefSelection[chefPointer]);
                                         chefSelection[chefPointer].setActionFalse();
+                                        soundFry.stop(frying);
                                     }
                                 }
                             } else if (temp.getClass().equals(Counters.class)) {
