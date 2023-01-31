@@ -125,10 +125,6 @@ public class Player {
                 }
             }
         }
-
-
-
-
     }
 
     public void Draw(SpriteBatch batch){

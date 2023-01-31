@@ -50,6 +50,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Play_Screen implements Screen {
 
@@ -77,11 +78,19 @@ public class Play_Screen implements Screen {
     public boolean Completed_scenario;
     public long timeStart;
     TextureAtlas atlas;
+    Texture helpIcon;
+    Texture controlHelp;
+    Texture ingredientsHelp;
+    boolean helpScreen;
 
 
     public Play_Screen(MyGame game, int scenarioCount) {
         this.game = game;
         atlas = new TextureAtlas(Gdx.files.internal("ENG1_Assets_V2.atlas"));
+        helpIcon = new Texture("helpIcon.png");
+        controlHelp = new Texture("ControlHelp.png");
+        ingredientsHelp = new Texture("IngredientsHelp.png");
+        helpScreen = false;
         timeStart = System.currentTimeMillis();
         // setting up the recipe contents in a hashmap
         recipes = new HashMap<>();
@@ -245,6 +254,15 @@ public class Play_Screen implements Screen {
             dispose();
         }
 
+        if(helpScreen == true){
+            game.batch.draw(controlHelp,gamecam.position.x+480,gamecam.position.y-440,
+                    400,202);
+            game.batch.draw(ingredientsHelp,gamecam.position.x-900,gamecam.position.y+250,
+                    900,215);
+        }
+
+        game.batch.draw(helpIcon, gamecam.position.x-800,gamecam.position.y-400, 80, 80);
+
         game.batch.end();
         // draws stations
         for (InteractivetileObject obj : activeStations) {
@@ -316,6 +334,13 @@ public class Play_Screen implements Screen {
 
                     Vector3 mouse = gamecam.unproject(
                         new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+                    System.out.println("mouse x: "+(mouse.x - gamecam.position.x)+" mouse y: "+(mouse.y - gamecam.position.y));
+
+                    if(mouse.x - gamecam.position.x > -800 && mouse.x - gamecam.position.x < -724
+                            && mouse.y - gamecam.position.y < -310 && mouse.y - gamecam.position.y > -385){
+                        helpScreen = !helpScreen;
+                    }
 
                     if (temp.getRect().getX() < mouse.x
                         & mouse.x < temp.getRect().getX() + temp.getRect()
