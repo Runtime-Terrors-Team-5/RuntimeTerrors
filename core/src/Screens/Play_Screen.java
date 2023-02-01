@@ -86,10 +86,10 @@ public class Play_Screen implements Screen {
     Texture controlHelp;
     Texture ingredientsHelp;
     boolean helpScreen;
-    Sound soundChop = Gdx.audio.newSound(Gdx.files.internal("sounds/Chopping.mp3"));
+    Sound soundChop = Gdx.audio.newSound(Gdx.files.internal("Sounds/Chopping.mp3"));
     long chopping = soundChop.play(0.5f);
 
-    Sound soundFry =  Gdx.audio.newSound(Gdx.files.internal("sounds/Frying.mp3"));
+    Sound soundFry =  Gdx.audio.newSound(Gdx.files.internal("Sounds/Frying.mp3"));
     long frying = soundFry.play(0.5f);
 
     /**
