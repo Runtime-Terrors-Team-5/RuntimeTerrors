@@ -53,6 +53,8 @@ public class Cooking_station extends InteractivetileObject {
 
     /**
      * decides if item is progressable
+     * when progress count down to below 0 the item is progressable
+     * and require interaction from player to progress
      * @param dt
      */
     public void progress(float dt) {

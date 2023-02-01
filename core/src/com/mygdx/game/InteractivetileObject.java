@@ -48,7 +48,6 @@ public class InteractivetileObject {
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         bdef.type = BodyDef.BodyType.StaticBody;
-        // can add / Mygame.PPM
         bdef.position.set((float) (bounds.getX() + 50), (float) (bounds.getY() + 50));
         System.out.println(String.format("X:%s Y:%s", bounds.getWidth(), bounds.getHeight()));
         body = world.createBody(bdef);
@@ -59,7 +58,7 @@ public class InteractivetileObject {
 
     /**
      *
-     * @return bounds
+     * @return bounds, a rectangle containing the x,y and width and height
      */
     public Rectangle getRect() {
         return bounds;
@@ -104,7 +103,8 @@ public class InteractivetileObject {
     }
 
     /**
-     *
+     *  Dispense an item to the player object given
+     *  item to be given is chosen in the class that overwrites this method
      * @param player
      */
     public void DispenseItem(Player player) {
@@ -120,7 +120,7 @@ public class InteractivetileObject {
     }
 
     /**
-     * draws the progress bar , sets its object shape, color and attributes
+     * draws the progress bar for food cooking, sets its object shape, color and attributes
      * @param cam game cam for object
      * @param progress amount of progress
      */
