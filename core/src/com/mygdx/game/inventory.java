@@ -23,8 +23,8 @@ public class inventory {
 
     /**
      *  instantates class
-     * @param img1
-     * @param img2
+     * @param img1 inventory when no items can be crafted
+     * @param img2 inventory when an item can be crrafted
      */
     public inventory(TextureRegion img1, TextureRegion img2) {
         notCraftableImg = img1;
@@ -34,9 +34,9 @@ public class inventory {
     }
 
     /**
-     * returns an items index
+     * returns an items from index, does not remove from the stack
      * @param Index
-     * @return  item at that index
+     * @return  item at that index does not remove from the stack
      */
     public foodItems getIndex(int Index) {
         return (foodItems) stack[Index];
@@ -44,8 +44,8 @@ public class inventory {
 
     /**
      * adds item to stack
-     * @param item
-     * @return boolean
+     * @param item food item to be added to the stack
+     * @return boolean true if item successfully added to the stack false otherwise
      */
     public boolean addItem(foodItems item) {
         if (stack[2] == null) {
@@ -110,6 +110,7 @@ public class inventory {
             batch.draw(notCraftableImg, x, y);
         }
 
+        //draws fooditems to the stack statring at the bottom slot
         for (int i = 0; i < stack.length; i++) {
             if (stack[i] != null) {
                 batch.draw(stack[i].getItemSprite(), x + 55, y + (i * 70) + (i + 1 * 10) + 150);
@@ -171,7 +172,7 @@ public class inventory {
 
     /**
      *
-     * @return craftable item
+     * @return boolean if an item is craftable
      */
     public boolean isCraftable() {
         return craftable;

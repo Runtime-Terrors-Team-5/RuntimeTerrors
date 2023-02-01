@@ -31,14 +31,14 @@ public class foodItems {
     }
 
     /**
-     * sets progressable
+     * sets progressable true
      */
     public void setProgressableTrue() {
         isProgressable = true;
     }
 
     /**
-     * sets false progressable
+     * sets progressable false
      */
     public void setProgressableFalse() {
         isProgressable = false;
@@ -50,6 +50,7 @@ public class foodItems {
      */
     public boolean isProgressable() {
         if (isProgressable) {
+            // prevents most items going to the fail state
             if (stage != 2) {
                 return true;
             }

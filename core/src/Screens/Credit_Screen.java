@@ -20,6 +20,7 @@ public class Credit_Screen implements Screen {
 
     private Viewport game_port;
     private OrthographicCamera gamecam;
+    //Generate the text for the credit screen
     private Hud hud;
 
     /**

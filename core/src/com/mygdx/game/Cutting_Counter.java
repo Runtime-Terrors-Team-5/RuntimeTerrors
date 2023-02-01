@@ -53,6 +53,7 @@ public class Cutting_Counter extends InteractivetileObject {
 
     /**
      *progress bar
+     * if progress countdown below 0 auto move the item to next stage but not fail stage
      * @param dt
      */
     public void progress(float dt) { 
