@@ -18,19 +18,19 @@ import static java.lang.Math.round;
  *handles player attributes and methods (actions)
  */
 public class Player {
-    private final World world;
-    // attributes
+    private final World world; // game world
+
     public Vector2 position;
     public Sprite sprite;
-    public Sprite inventorySprite;
-    public inventory inventory;
-    private boolean action;
+    public Sprite inventorySprite; // on screen moving inventory
+    public inventory inventory;  // inventory contents
+    private boolean action;  // if the player is interacting with a station
 
     public float speed = 12; // player movement speed
 
     // rectangle for collisions
     public Rectangle Rectangle;
-    public boolean overlap;
+    public boolean overlap;  // object collision overlaps
 
     /**
      * instantiates chef, inventory , position and its world
@@ -41,14 +41,15 @@ public class Player {
      */
     // methods
     public Player(TextureRegion img, TextureRegion img2, TextureRegion img3, World world){
-        action = false;
+        // initialises the player attributes
+        action = false;  // sets , is player doing an action to false
         sprite = new Sprite(img);
         inventory = new inventory(img2, img3);
         inventorySprite = new Sprite(img2);
         sprite.setScale(2);
         position = new Vector2(Gdx.graphics.getWidth()/2-300,sprite.getScaleY()*sprite.getHeight()/2+500);
         this.world = world;
-
+        // creating Player chef body
         BodyDef bdef = new BodyDef();
         bdef.position.set(position);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -56,7 +57,7 @@ public class Player {
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(sprite.getX()/2, sprite.getY()/2);
-
+        // creates fixture for collisions with other fixtures
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -76,9 +77,9 @@ public class Player {
         // checks for collisions by running a loop
         Rectangle = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
+        world.getBodies(bodies);  // gets counter (kitchen) objects it can collide with
         overlap = false;
-
+        // loops through objects
         for (Body b:bodies) {
 
             if (b.getFixtureList().get(0).getUserData() == null) {
@@ -91,12 +92,12 @@ public class Player {
 
             InteractivetileObject temp = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
 
-
+            // if player action is true, eg pressing a button near a object
             if (action) {
                 continue;
             }
             InteractivetileObject tempInt = (InteractivetileObject) b.getFixtureList().get(0).getUserData();
-            // player movement input
+            // player movement when it experiences object collision, stops the player from moving out of the map
 
             if (Gdx.input.isKeyPressed(Keys.A)) {
                 Rectangle = new Rectangle(sprite.getX()+(sprite.getWidth()/4) - 60, sprite.getY()+(sprite.getWidth()/4), sprite.getWidth()/2, sprite.getHeight()/2);
@@ -121,7 +122,7 @@ public class Player {
             }
             if (action) {
                 continue;
-            }
+            } // player movement if it's not colliding with objects (normal movement)
             if(overlap == false) {
                 if (Gdx.input.isKeyPressed(Keys.A)) {
                     position.x -= speed * Gdx.graphics.getDeltaTime();
@@ -144,11 +145,12 @@ public class Player {
      * @param batch sprites
      */
     public void Draw(SpriteBatch batch){
+        // updates game screen consistently, to update the screen to new actions
         Update(Gdx.graphics.getDeltaTime());
         sprite.setPosition(position.x, position.y);
 
         sprite.setSize(50,50);
-
+        // draws each chef's player inventory, only the chef that is selected
         // inventorySprite.setPosition(, );
         if(Play_Screen.chefSelection[Play_Screen.chefPointer]==this){
             inventory.drawInventory(batch,position.x+300,position.y);

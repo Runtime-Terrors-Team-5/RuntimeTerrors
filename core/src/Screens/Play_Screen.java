@@ -58,9 +58,9 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Play_Screen implements Screen {
 
-    public static Player[] chefSelection;
-    public static int chefPointer;
-    public static HashSet<InteractivetileObject> activeStations;
+    public static Player[] chefSelection; // contains the chef objects
+    public static int chefPointer;  // points to current chef index
+    public static HashSet<InteractivetileObject> activeStations;  // active cooking stations
     public static HashMap recipes; // recipe items, can be used for random order generation
     private final MyGame game;
     // sets screen size
@@ -86,6 +86,7 @@ public class Play_Screen implements Screen {
     Texture controlHelp;
     Texture ingredientsHelp;
     boolean helpScreen;
+    // game audio for counters
     Sound soundChop = Gdx.audio.newSound(Gdx.files.internal("Sounds/Chopping.mp3"));
     long chopping = soundChop.play(0.5f);
 
@@ -132,7 +133,7 @@ public class Play_Screen implements Screen {
         hud = new Recipe_Hud(game.batch, Orders);
 
         activeStations = new HashSet<>();
-
+        // game camera
         gamecam = new OrthographicCamera();
         game_port = new FitViewport(MyGame.V_WIDTH, MyGame.V_HEIGHT, gamecam);
         // loads kitchen map
@@ -144,9 +145,9 @@ public class Play_Screen implements Screen {
         // sets no gravity and creates the world
         world = new World(new Vector2(0, 0), true);
         b2dr = new Box2DDebugRenderer();
-        world.setContactListener(new World_contact_listener());
         // identifies what the sprite has come into contact with
-
+        world.setContactListener(new World_contact_listener());
+       // chef creation in game
         chefSelection = new Player[]{
             new Player(atlas.findRegion("C_Blue_N"), atlas.findRegion("M_Blue_N"),
                 atlas.findRegion("M_Blue_C123"), world),
@@ -156,12 +157,12 @@ public class Play_Screen implements Screen {
         };
 
         chefPointer = 0;
-
+        // created object body which each MapObject extends from
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         Body body;
         FixtureDef fdef = new FixtureDef();
-        // Creates counters objects
+        // Creates all types of counter objects (all in game kitchen objects)
 
         for (MapObject object : map.getLayers().get(9).getObjects()
             .getByType(RectangleMapObject.class)) {
@@ -226,8 +227,8 @@ public class Play_Screen implements Screen {
     }
 
     /**
-     *
-     * @return
+     *  returns the game world
+     * @return the game world
      */
     public World getWorld() {
         return world;
@@ -239,12 +240,12 @@ public class Play_Screen implements Screen {
     }
 
     /**
-     *
+     * Renders the game screen
      * @param delta The time in seconds since the last render.
      */
     @Override
     public void render(float delta) {
-        update(delta);
+        update(delta);  // updates game screen
         ScreenUtils.clear(1, 1, 1, 1); // background colour
         gamecam.update();
         game.batch.setProjectionMatrix(gamecam.combined);
@@ -277,7 +278,7 @@ public class Play_Screen implements Screen {
             game.setScreen(new Result_screen(game, timeElapsed));
             dispose();
         }
-
+        // if the help button is selected it shows the help methods
         if(helpScreen == true){
             game.batch.draw(controlHelp,gamecam.position.x+480,gamecam.position.y-440,
                     400,202);
@@ -298,7 +299,7 @@ public class Play_Screen implements Screen {
 
     }
 
-    // resizes game screen
+
 
     /**
      * Adjusts game screen to new window size
@@ -316,7 +317,7 @@ public class Play_Screen implements Screen {
      * Updates the game screen so it registers changes
      * @param dt
      */
-    // updates screen with new changes
+
     public void update(float dt) {
         handleInput(dt);
         for (InteractivetileObject obj :
@@ -346,7 +347,7 @@ public class Play_Screen implements Screen {
             if (chefPointer > chefSelection.length - 1) {
                 chefPointer = 0;
             }
-        }
+        }  // unused function
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             System.out.print(Gdx.input.getX());
             System.out.print(" ");
@@ -357,7 +358,7 @@ public class Play_Screen implements Screen {
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
             for (Body b : bodies) {
-
+                // loops through the counters
                 if (sqrt(pow(b.getPosition().x - chefSelection[chefPointer].position.x, 2) +
                     pow(b.getPosition().y - chefSelection[chefPointer].position.y, 2)) < 200) {
                     if (b.getFixtureList().get(0).getUserData() == null) {
@@ -386,7 +387,7 @@ public class Play_Screen implements Screen {
                         if (temp.getRect().getY() < mouse.y
                             & mouse.y < temp.getRect().getY() + temp.getRect()
                             .getHeight()) {
-                            // identifies collided object
+                            // identifies collided object and calls its associated method
                             if (temp.getClass().equals(Bin.class)) {
                                 temp.DisposeTrash(chefSelection[chefPointer]);
                             } else if (temp.getClass().equals(Onion_dispenser.class)) {
@@ -404,7 +405,7 @@ public class Play_Screen implements Screen {
                                     foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
                                     if (tempItem == null) {
                                         continue;
-                                    }
+                                    }  // checks if given item is acceptable for that counter for chopping
                                     if (temp.acceptableItem(tempItem.getItemName())) {
                                         ((Cutting_Counter) temp).takeItem(
                                             chefSelection[chefPointer].inventory.returnHead());
@@ -412,7 +413,7 @@ public class Play_Screen implements Screen {
                                         chopping = soundChop.play(0.5f);
                                         soundChop.setLooping(chopping, true);
                                     }
-                                } else {
+                                } else {  // stops chopping sound when finished
                                     ((Cutting_Counter) temp).removeItem(chefSelection[chefPointer]);
                                     chefSelection[chefPointer].setActionFalse();
                                     soundChop.stop(chopping);
@@ -422,7 +423,7 @@ public class Play_Screen implements Screen {
                                     foodItems tempItem = chefSelection[chefPointer].inventory.checkHead();
                                     if (tempItem == null) {
                                         continue;
-                                    }
+                                    } // checks if item is acceptable to be frying
                                     if (temp.acceptableItem(tempItem.getItemName())) {
                                         ((Cooking_station) temp).takeItem(
                                             chefSelection[chefPointer].inventory.returnHead());
@@ -433,13 +434,13 @@ public class Play_Screen implements Screen {
                                 } else {
                                     if (temp.getCurrentItem().isProgressable()) {
                                         temp.nextStage();
-                                    } else {
+                                    } else { // stops frying sound when finished
                                         ((Cooking_station) temp).removeItem(
                                             chefSelection[chefPointer]);
                                         chefSelection[chefPointer].setActionFalse();
                                         soundFry.stop(frying);
                                     }
-                                }
+                                } // adds items to normal counters and removes then ( goes to chef stack)
                             } else if (temp.getClass().equals(Counters.class)) {
                                 if (temp.getCurrentItem() == null) {
                                     ((Counters) temp).takeItem(
@@ -457,6 +458,7 @@ public class Play_Screen implements Screen {
                                 }
                                 if (Orders.isEmpty()) {
                                     Completed_scenario = true;
+                                    // checks if orders are correct, then updates it
                                 } else if (((Service_Counter) temp).CheckOrders(
                                     chefSelection[chefPointer].inventory.checkHead(),
                                     this.Orders)) {
